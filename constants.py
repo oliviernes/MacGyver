@@ -18,3 +18,5 @@ NEEDLE_IMAGE = "sources/images/needle.png"
 ROD_IMAGE = "sources/images/rod.png"
 WALL_IMAGE = "sources/images/wall.png"
 
+MAP1 = "sources/map1.txt"
+MAP2 = "sources/map2.txt"

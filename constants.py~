@@ -1,0 +1,17 @@
+"""Constants needed for Mc Giver Labyrinth game"""
+
+#Window parameter:
+SPRITES_NUMBER = 15
+SPRITE_SIZE = 30
+WINDOW_SIZE = SPRITES_NUMBER * SPRITE_SIZE
+
+#Personnalisation de la fenêtre
+titre_fenetre = "DK Labyrinthe"
+image_icone = "images/dk_droite.png"
+
+#Listes des images du jeu
+image_accueil = "images/accueil.png"
+image_fond = "images/fond.jpg"
+image_mur = "images/mur.png"
+image_depart = "images/depart.png"
+image_arrivee = "images/arrivee.png"
