@@ -12,7 +12,7 @@ WINDOW_SIZE = SPRITES_NUMBER * SPRITE_SIZE
 #Images list:
 ETHER_IMAGE = "sources/images/ether.png"
 FLOOR_IMAGE = "sources/images/floor1.png"
-GARDIAN_IMAGE = "sources/images/guardian.png"
+WARDEN_IMAGE = "sources/images/guardian.png"
 MACGYVER_IMAGE = "sources/images/macgyver.png"
 NEEDLE_IMAGE = "sources/images/needle.png"
 ROD_IMAGE = "sources/images/rod.png"

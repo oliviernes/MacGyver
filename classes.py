@@ -33,3 +33,16 @@ class Map:
                 elif sprite == "0":
                     window.blit(floor, (x, y))
                     
+class BaseSprite():
+    """Base class for objects"""
+    def __init__(self, image):
+        self.image = pygame.image.load(image).convert_alpha()
+        self.case_number_x = 0
+        self.case_number_y = 0
+        self.x = 0
+        self.y = 0
+
+    def display(self, window):
+        """Display the sprite on the window"""
+        window.blit(self.image, (self.x, self.y))
+        
