@@ -35,14 +35,55 @@ class Map:
                     
 class BaseSprite():
     """Base class for objects"""
-    def __init__(self, image):
+    def __init__(self, image, case_number_x, case_number_y):
         self.image = pygame.image.load(image).convert_alpha()
-        self.case_number_x = 0
-        self.case_number_y = 0
-        self.x = 0
-        self.y = 0
+        self.case_number_x = case_number_x
+        self.case_number_y = case_number_y
+        self.x = self.case_number_x * SPRITE_SIZE
+        self.y = self.case_number_y * SPRITE_SIZE
 
     def display(self, window):
         """Display the sprite on the window"""
         window.blit(self.image, (self.x, self.y))
+
+    # def position(self, maze):
+    #     """return object's position"""
+    #     return maze.maze_array[self.case_number_y][self.case_number_x]
+    
+class Warden(BaseSprite):
+    """Class to display the warden"""
+    def __init__(self, image):
+        super().__init__(image, case_number_x = 14, case_number_y = 14)
         
+class MacGyver(BaseSprite):
+    """Class to display and move MacGyver"""
+    def __init__(self, maze, image):
+        self.maze = maze
+        super().__init__(image, case_number_x = 0, case_number_y = 0)    
+
+    def move(self, direction):
+        """move MacGiver according to the direction input"""
+        if direction == "right":
+            if self.case_number_x < (SPRITES_NUMBER - 1):
+                if self.maze.maze_array[self.case_number_y][self.case_number_x + 1] != "m":
+                    self.case_number_x += 1
+                    self.x = self.case_number_x * SPRITE_SIZE
+
+        if direction == "left":
+            if self.case_number_x > 0:
+                if self.maze.maze_array[self.case_number_y][self.case_number_x - 1] != "m":
+                    self.case_number_x -= 1
+                    self.x = self.case_number_x * SPRITE_SIZE
+                    
+        if direction == "up":
+            if self.case_number_y > 0:
+                if self.maze.maze_array[self.case_number_y - 1][self.case_number_x] != "m":
+                    self.case_number_y -= 1
+                    self.y = self.case_number_y * SPRITE_SIZE
+                    
+        if direction == "down":
+            if self.case_number_y < (SPRITES_NUMBER - 1):
+                if self.maze.maze_array[self.case_number_y + 1][self.case_number_x] != "m":
+                    self.case_number_y += 1
+                    self.y = self.case_number_y * SPRITE_SIZE
+

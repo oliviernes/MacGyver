@@ -14,10 +14,26 @@ pygame.init()
 window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 
 maze1 = Map(MAP1)
-#warden = BaseSprite(WARDEN_IMAGE)
-macgyver = BaseSprite(MACGYVER_IMAGE)
+guard = Warden(WARDEN_IMAGE)
+macgyver = MacGyver(maze1, MACGYVER_IMAGE)
 
-while True:
+playing = True
+
+while playing:
+    for event in pygame.event.get():
+        if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+            playing = False
+        elif event.type == KEYDOWN:
+            if event.key == K_RIGHT:
+                macgyver.move('right')
+            if event.key == K_LEFT:
+                macgyver.move('left')
+            if event.key == K_UP:
+                macgyver.move('up')
+            if event.key == K_DOWN:
+                macgyver.move('down')
+            
     maze1.display_map(window)
     macgyver.display(window)
+    guard.display(window)
     pygame.display.flip()
