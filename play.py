@@ -21,6 +21,17 @@ playing = True
 
 while playing:
     for event in pygame.event.get():
+
+        # To accelerate repeating key strokes:
+        if event.type == KEYDOWN:
+            if event.key == K_a:
+                pygame.key.set_repeat(10,100)
+
+        # To slow down with one move each key stroke:
+        if event.type == KEYDOWN:
+            if event.key == K_s:
+                pygame.key.set_repeat()
+
         if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
             playing = False
         elif event.type == KEYDOWN:
