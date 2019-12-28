@@ -1,4 +1,6 @@
 import pygame
+import random
+from random import randint
 from constants import *
 
 class Map:
@@ -27,39 +29,38 @@ class Map:
             for idx_sprite, sprite in enumerate(line):
                 x = idx_sprite * SPRITE_SIZE
                 y = idx_line * SPRITE_SIZE
-                
                 if sprite == "m":
                     window.blit(wall, (x, y))
-                elif sprite == "0":
+                elif sprite == "0" or "d" or "a":
                     window.blit(floor, (x, y))
                     
 class BaseSprite():
     """Base class for objects"""
-    def __init__(self, image, case_number_x, case_number_y):
+    def __init__(self, image):
         self.image = pygame.image.load(image).convert_alpha()
+        
+    def position(self, case_number_x = 0, case_number_y = 0):
+        """return object's position"""
         self.case_number_x = case_number_x
         self.case_number_y = case_number_y
         self.x = self.case_number_x * SPRITE_SIZE
         self.y = self.case_number_y * SPRITE_SIZE
-
+        return (self.x, self.y)
+        
     def display(self, window):
         """Display the sprite on the window"""
         window.blit(self.image, (self.x, self.y))
-
-    # def position(self, maze):
-    #     """return object's position"""
-    #     return maze.maze_array[self.case_number_y][self.case_number_x]
-    
+   
 class Warden(BaseSprite):
     """Class to display the warden"""
     def __init__(self, image):
-        super().__init__(image, case_number_x = 14, case_number_y = 14)
-        
+        super().__init__(image)
+
 class MacGyver(BaseSprite):
     """Class to display and move MacGyver"""
     def __init__(self, maze, image):
         self.maze = maze
-        super().__init__(image, case_number_x = 0, case_number_y = 0)    
+        super().__init__(image)    
 
     def move(self, direction):
         """move MacGiver according to the direction input"""
@@ -87,3 +88,16 @@ class MacGyver(BaseSprite):
                     self.case_number_y += 1
                     self.y = self.case_number_y * SPRITE_SIZE
 
+class Tools(BaseSprite):
+    """to instance and display MacGyver's objects"""
+
+    def __init__(self, maze, image):
+        super().__init__(image)
+        self.maze = maze       
+        
+    def place_item(self, maze):
+        while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
+            self.case_number_x = randint(1, 14)
+            self.case_number_y= randint(1, 14)
+            self.x = self.case_number_x * SPRITE_SIZE
+            self.y = self.case_number_y * SPRITE_SIZE        

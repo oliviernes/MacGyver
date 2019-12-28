@@ -14,9 +14,20 @@ pygame.init()
 window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 
 maze1 = Map(MAP1)
+print(maze1)
 guard = Warden(WARDEN_IMAGE)
+guard.position(14, 14)
 macgyver = MacGyver(maze1, MACGYVER_IMAGE)
+macgyver.position()
 
+list_tool = []
+for tool_name, tool_image in TOOL_LIST.items():
+    tool_name = Tools(maze1, tool_image)
+    tool_name.position()
+    tool_name.place_item(maze1)
+    list_tool.append(tool_name)
+    # print(list_tool[0].x)       
+    
 playing = True
 
 while playing:
@@ -47,4 +58,6 @@ while playing:
     maze1.display_map(window)
     macgyver.display(window)
     guard.display(window)
+    for tool in list_tool:
+        tool.display(window)
     pygame.display.flip()
