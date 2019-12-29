@@ -22,11 +22,13 @@ macgyver.position()
 
 list_tool = []
 for tool_name, tool_image in TOOL_LIST.items():
-    tool_name = Tools(maze1, tool_image)
-    tool_name.position()
-    tool_name.place_item(maze1)
-    list_tool.append(tool_name)
+    tool = Tools(maze1, tool_image, tool_name)
+    tool.position()
+    tool.place_item(maze1)
+    list_tool.append(tool)
     # print(list_tool[0].x)       
+
+grabbed_tools = []
     
 playing = True
 
@@ -56,8 +58,10 @@ while playing:
                 macgyver.move('down')
             
     maze1.display_map(window)
+    macgyver.check_tools(list_tool, grabbed_tools)
     macgyver.display(window)
     guard.display(window)
     for tool in list_tool:
-        tool.display(window)
+        if tool.name not in grabbed_tools:
+            tool.display(window)
     pygame.display.flip()

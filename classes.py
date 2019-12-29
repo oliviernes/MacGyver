@@ -88,12 +88,21 @@ class MacGyver(BaseSprite):
                     self.case_number_y += 1
                     self.y = self.case_number_y * SPRITE_SIZE
 
+    def check_tools(self, list_tool, grabbed_tools):
+        for tool in list_tool:
+            if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
+                grabbed_tools.append(tool.name)
+                print("You grabbed a " + tool.name + "!")
+                print("Your tools:" + str(grabbed_tools))
+
+                    
 class Tools(BaseSprite):
     """to instance and display MacGyver's objects"""
 
-    def __init__(self, maze, image):
+    def __init__(self, maze, image, name):
         super().__init__(image)
         self.maze = maze       
+        self.name = name
         
     def place_item(self, maze):
         while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
@@ -101,3 +110,4 @@ class Tools(BaseSprite):
             self.case_number_y= randint(1, 14)
             self.x = self.case_number_x * SPRITE_SIZE
             self.y = self.case_number_y * SPRITE_SIZE        
+            
