@@ -5,10 +5,6 @@ SPRITES_NUMBER = 15
 SPRITE_SIZE = 30
 WINDOW_SIZE = SPRITES_NUMBER * SPRITE_SIZE
 
-# #Window customization:
-# titre_fenetre = "DK Labyrinthe"
-# image_icone = "images/dk_droite.png"
-
 #Images:
 ETHER_IMAGE = "sources/images/ether.png"
 FLOOR_IMAGE = "sources/images/floor1.png"

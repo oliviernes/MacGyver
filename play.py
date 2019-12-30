@@ -13,7 +13,7 @@ pygame.init()
 
 window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 
-maze1 = Map(MAP1)
+maze1 = Map(MAP2)
 print(maze1)
 guard = Warden(WARDEN_IMAGE)
 guard.position(14, 14)
@@ -61,7 +61,21 @@ while playing:
     macgyver.check_tools(list_tool, grabbed_tools)
     macgyver.display(window)
     guard.display(window)
+
+    """Display tools if they haven't been taken"""
+    
     for tool in list_tool:
         if tool.name not in grabbed_tools:
             tool.display(window)
+
+    """Check items' number when MacGyver reach the warden:"""
+    
+    if macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) == 3:
+        print("You win!")
+        playing = False
+    elif macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) != 3:
+        print("You lose!")
+        playing = False
+
     pygame.display.flip()
+
