@@ -2,6 +2,8 @@
 # coding: utf-8
 
 import pygame
+import time
+
 from pygame.locals import *
 
 from classes import *
@@ -20,16 +22,20 @@ guard.position(14, 14)
 macgyver = MacGyver(maze1, MACGYVER_IMAGE)
 macgyver.position()
 
+#sounds objects:
+
+win_sound = pygame.mixer.Sound(WIN_SOUND)
+game_over_sound = pygame.mixer.Sound(GAME_OVER_SOUND)
+
 list_tool = []
 for tool_name, tool_image in TOOL_LIST.items():
     tool = Tools(maze1, tool_image, tool_name)
     tool.position()
     tool.place_item(maze1)
     list_tool.append(tool)
-    # print(list_tool[0].x)       
 
 grabbed_tools = []
-    
+
 playing = True
 
 while playing:
@@ -71,10 +77,14 @@ while playing:
     """Check items' number when MacGyver reach the warden:"""
     
     if macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) == 3:
+        win_sound.play()
         print("You win!")
+        time.sleep(2)
         playing = False
     elif macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) != 3:
+        game_over_sound.play()
         print("You lose!")
+        time.sleep(2)
         playing = False
 
     pygame.display.flip()

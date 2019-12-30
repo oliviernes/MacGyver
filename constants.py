@@ -21,3 +21,9 @@ MAP2 = "sources/map2.txt"
 #Tool's dictionary:
 
 TOOL_LIST = {"ether": ETHER_IMAGE, "needle": NEEDLE_IMAGE, "rod": ROD_IMAGE}
+
+#SOUNDS:
+
+WIN_SOUND = "sources/sound/win_sound.wav"
+GAME_OVER_SOUND = "sources/sound/game_over_sound.wav"
+TOOLS_SOUND = "sources/sound/tools_sound.wav"
