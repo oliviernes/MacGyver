@@ -104,7 +104,7 @@ class MacGyver(BaseSprite):
         for tool in list_tool:
             if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
                 grabbed_tools.append(tool.name)
-                sound_tools.play()
+                # sound_tools.play()
                 print("You grabbed a " + tool.name + "!")
                 print("Your tools:" + str(grabbed_tools))
 
@@ -123,4 +123,8 @@ class Tools(BaseSprite):
             self.case_number_y= randint(1, 14)
             self.x = self.case_number_x * SPRITE_SIZE
             self.y = self.case_number_y * SPRITE_SIZE        
+
+        """To avoid tools'superposition"""
+        self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
             
+                    

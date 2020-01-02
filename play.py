@@ -33,8 +33,8 @@ for tool_name, tool_image in TOOL_LIST.items():
     tool = Tools(maze1, tool_image, tool_name)
     tool.position()
     tool.place_item(maze1)
-    list_tool.append(tool)
-
+    list_tool.append(tool)    
+    
 grabbed_tools = []
 
 playing = True
@@ -86,17 +86,17 @@ while playing:
     """Check items' number when MacGyver reach the warden:"""
     
     if macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) == 3:
-        win_sound.play()
+        # win_sound.play()
         print("You win!")
         maze1.warden_asleep_info(window, "You win! You asleepped the warden!", COLOR_WIN)
-        time.sleep(3)
-        playing = False
+        # time.sleep(3)
+        # playing = False
     elif macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) != 3:
         maze1.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-        game_over_sound.play()
+        # game_over_sound.play()
         print("You lose!")
-        time.sleep(3)
-        playing = False
+        # time.sleep(3)
+        # playing = False
 
     pygame.display.flip()
 
