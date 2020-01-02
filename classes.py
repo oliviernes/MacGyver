@@ -33,7 +33,17 @@ class Map:
                     window.blit(wall, (x, y))
                 elif sprite == "0" or "d" or "a":
                     window.blit(floor, (x, y))
-                    
+
+    def game_info(self, window, msg):
+        font = pygame.font.Font(None, 35)
+        text1 = font.render(msg, True, (255, 255, 255), (0, 0, 0))
+        window.blit(text1, (0, SPRITE_SIZE * SPRITES_NUMBER))
+
+    def warden_asleep_info(self, window, msg, color_text):
+        font = pygame.font.Font(None, 35)
+        text2 = font.render(msg, True, color_text, (0, 0, 0))
+        window.blit(text2, (0, SPRITE_SIZE * (SPRITES_NUMBER + 1)))
+                
 class BaseSprite():
     """Base class for objects"""
     def __init__(self, image):
@@ -89,6 +99,7 @@ class MacGyver(BaseSprite):
                     self.y = self.case_number_y * SPRITE_SIZE
 
     def check_tools(self, list_tool, grabbed_tools):
+        """bug of the sound_tools: Fatal Python error: take_gil: NULL tstate"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
             if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:

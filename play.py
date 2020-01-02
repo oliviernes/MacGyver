@@ -13,10 +13,11 @@ pygame.init()
 
 #opening of window Pygame
 
-window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+# window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+window = pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
 
 maze1 = Map(MAP2)
-print(maze1)
+maze1.game_info(window, "Picked up tools:")
 guard = Warden(WARDEN_IMAGE)
 guard.position(14, 14)
 macgyver = MacGyver(maze1, MACGYVER_IMAGE)
@@ -74,17 +75,27 @@ while playing:
         if tool.name not in grabbed_tools:
             tool.display(window)
 
+    """Display picked tools"""
+    for idx, tools in enumerate(grabbed_tools):
+        for tool in list_tool:
+            if tools == tool.name:
+                tool.x = (idx + 6) * SPRITE_SIZE
+                tool.y = SPRITES_NUMBER * SPRITE_SIZE
+                tool.display(window)
+        
     """Check items' number when MacGyver reach the warden:"""
     
     if macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) == 3:
         win_sound.play()
         print("You win!")
-        time.sleep(2)
+        maze1.warden_asleep_info(window, "You win! You asleepped the warden!", COLOR_WIN)
+        time.sleep(3)
         playing = False
     elif macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) != 3:
+        maze1.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
         game_over_sound.play()
         print("You lose!")
-        time.sleep(2)
+        time.sleep(3)
         playing = False
 
     pygame.display.flip()
