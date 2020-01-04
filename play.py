@@ -32,7 +32,29 @@ while game:
     home.show(window)
     pygame.display.flip()
 
-    maze1 = Map(MAP1)
+    over = True
+    win = True
+    lose = False
+    selected = False
+    
+    while home_page:
+        
+        for event in pygame.event.get():
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                game = False
+                home_page = False
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN or event.key == K_KP_ENTER:
+                    if selected == True:
+                        home_page = False
+                        playing = True
+                if event.key == K_F1:
+                    selected = True
+                    maze1 = Map(MAP1)
+                elif event.key == K_F2:
+                    selected = True
+                    maze1 = Map(MAP2)
+                                
     maze1.game_info(window, "Picked up tools:")
     guard = Warden(WARDEN_IMAGE)
     guard.position(14, 14)
@@ -48,20 +70,6 @@ while game:
 
     grabbed_tools = []
 
-    over = True
-    win = True
-    lose = False
-
-    while home_page:
-        for event in pygame.event.get():
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                game = False
-                home_page = False
-            if event.type == KEYDOWN:
-                if event.key == K_RETURN or event.key == K_KP_ENTER:
-                    playing = True
-                    home_page = False
-        
     while playing:
         for event in pygame.event.get():
 
