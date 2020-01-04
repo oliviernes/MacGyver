@@ -3,6 +3,16 @@ import random
 from random import randint
 from constants import *
 
+class Homepage:
+    """Show homepage"""
+
+    def __init__(self, homepage):
+        self.homepage = homepage
+
+    def show(self, window):
+        page = pygame.image.load(self.homepage).convert()
+        window.blit(page, (0, 0))
+        
 class Map:
     """build the map from map*.txt files"""
 
@@ -126,5 +136,5 @@ class Tools(BaseSprite):
 
         """To avoid tools'superposition"""
         self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
-            
+
                     

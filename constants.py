@@ -15,6 +15,7 @@ MACGYVER_IMAGE = "sources/images/macgyver.png"
 NEEDLE_IMAGE = "sources/images/needle.png"
 ROD_IMAGE = "sources/images/rod.png"
 WALL_IMAGE = "sources/images/wall.png"
+HOMEPAGE_IMAGE = "sources/images/homepage.png"
 
 #map:
 MAP1 = "sources/map1.txt"
