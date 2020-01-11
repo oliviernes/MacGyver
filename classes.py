@@ -114,7 +114,8 @@ class MacGyver(BaseSprite):
         for tool in list_tool:
             if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
                 grabbed_tools.append(tool.name)
-                # sound_tools.play()
+                """SOUND settings"""
+                sound_tools.play()
                 print("You grabbed a " + tool.name + "!")
                 print("Your tools:" + str(grabbed_tools))
 

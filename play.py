@@ -122,17 +122,19 @@ while game:
         """Check items' number when MacGyver reach the warden:"""
 
         if macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) == 3:
-            # win_sound.play()
             if over == True:
                 print("You win!")
+                """SOUND settings"""
+                win_sound.play()
             over = False
             lose = True
             maze1.warden_asleep_info(window, "You win! You asleepped the warden!", COLOR_WIN)
         elif macgyver.case_number_x == 14 and macgyver.case_number_y == 14 and len(grabbed_tools) != 3:
             maze1.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-            # game_over_sound.play()
             if over == True:
                 print("You lose!")
+                """SOUND settings"""
+                game_over_sound.play()                
             win = False
             over = False
 
