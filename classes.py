@@ -3,6 +3,7 @@ import random
 from random import randint
 from constants import *
 
+
 class Homepage:
     """Show homepage"""
 
@@ -12,7 +13,8 @@ class Homepage:
     def show(self, window):
         page = pygame.image.load(self.homepage).convert()
         window.blit(page, (0, 0))
-        
+
+
 class Map:
     """build the map from map*.txt files"""
 
@@ -25,7 +27,7 @@ class Map:
             for line in maze_file:
                 line_level = []
                 for sprite in line:
-                    if sprite != '\n':
+                    if sprite != "\n":
                         line_level.append(sprite)
                 maze_list.append(line_level)
             self.maze_array = maze_list
@@ -53,58 +55,76 @@ class Map:
         font = pygame.font.Font(None, 35)
         text2 = font.render(msg, True, color_text, (0, 0, 0))
         window.blit(text2, (0, SPRITE_SIZE * (SPRITES_NUMBER + 1)))
-                
-class BaseSprite():
+
+
+class BaseSprite:
     """Base class for objects"""
+
     def __init__(self, image):
         self.image = pygame.image.load(image).convert_alpha()
-        
-    def position(self, case_number_x = 0, case_number_y = 0):
+
+    def position(self, case_number_x=0, case_number_y=0):
         """return object's position"""
         self.case_number_x = case_number_x
         self.case_number_y = case_number_y
         self.x = self.case_number_x * SPRITE_SIZE
         self.y = self.case_number_y * SPRITE_SIZE
         return (self.x, self.y)
-        
+
     def display(self, window):
         """Display the sprite on the window"""
         window.blit(self.image, (self.x, self.y))
-   
+
+
 class Warden(BaseSprite):
     """Class to display the warden"""
+
     def __init__(self, image):
         super().__init__(image)
 
+
 class MacGyver(BaseSprite):
     """Class to display and move MacGyver"""
+
     def __init__(self, maze, image):
         self.maze = maze
-        super().__init__(image)    
+        super().__init__(image)
 
     def move(self, direction):
         """move MacGiver according to the direction input"""
         if direction == "right":
             if self.case_number_x < (SPRITES_NUMBER - 1):
-                if self.maze.maze_array[self.case_number_y][self.case_number_x + 1] != "m":
+                if (
+                    self.maze.maze_array[self.case_number_y][self.case_number_x + 1]
+                    != "m"
+                ):
                     self.case_number_x += 1
                     self.x = self.case_number_x * SPRITE_SIZE
 
         if direction == "left":
             if self.case_number_x > 0:
-                if self.maze.maze_array[self.case_number_y][self.case_number_x - 1] != "m":
+                if (
+                    self.maze.maze_array[self.case_number_y][self.case_number_x - 1]
+                    != "m"
+                ):
                     self.case_number_x -= 1
                     self.x = self.case_number_x * SPRITE_SIZE
-                    
+
         if direction == "up":
             if self.case_number_y > 0:
-                if self.maze.maze_array[self.case_number_y - 1][self.case_number_x] != "m":
+                if (
+                    self.maze.maze_array[self.case_number_y - 1][self.case_number_x]
+                    != "m"
+                ):
                     self.case_number_y -= 1
                     self.y = self.case_number_y * SPRITE_SIZE
-                    
+
         if direction == "down":
             if self.case_number_y < (SPRITES_NUMBER - 1):
-                if self.maze.maze_array[self.case_number_y + 1][self.case_number_x] != "m":
+                if (
+                    self.maze.maze_array[self.case_number_y + 1][self.case_number_x]
+                    != "m"
+                ):
                     self.case_number_y += 1
                     self.y = self.case_number_y * SPRITE_SIZE
 
@@ -119,23 +139,21 @@ class MacGyver(BaseSprite):
                 print("You grabbed a " + tool.name + "!")
                 print("Your tools:" + str(grabbed_tools))
 
-                    
+
 class Tools(BaseSprite):
     """to instance and display MacGyver's objects"""
 
     def __init__(self, maze, image, name):
         super().__init__(image)
-        self.maze = maze       
+        self.maze = maze
         self.name = name
-        
+
     def place_item(self, maze):
         while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
             self.case_number_x = randint(1, 14)
-            self.case_number_y= randint(1, 14)
+            self.case_number_y = randint(1, 14)
             self.x = self.case_number_x * SPRITE_SIZE
-            self.y = self.case_number_y * SPRITE_SIZE        
+            self.y = self.case_number_y * SPRITE_SIZE
 
         """To avoid tools'superposition"""
         self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
-
-                    
