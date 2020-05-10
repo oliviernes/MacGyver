@@ -23,9 +23,7 @@ game_over_sound = pygame.mixer.Sound(GAME_OVER_SOUND)
 
 home = Homepage(HOMEPAGE_IMAGE)
 
-playing = False
-game = True
-home_page = True
+control=Control()
 
 def display():
     home.show(window)
@@ -34,30 +32,31 @@ def display():
 def get_input():
     return pygame.event.get()
 
-while game:
+while control.game:
 
     display()
 
-    over = True
-    win = True
-    lose = False
+    control.over = True
+    control.win = True
+    control.lose = False
+    control.selected = False
 
 
-    while home_page:
+    while control.home_page:
         for event in get_input():
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                game = False
-                home_page = False
+                control.game = False
+                control.home_page = False
             if event.type == KEYDOWN:
                 if event.key == K_RETURN or event.key == K_KP_ENTER:
-                    if selected == True:
-                        home_page = False
-                        playing = True
+                    if control.selected == True:
+                        control.home_page = False
+                        control.playing = True
                 if event.key == K_F1:
-                    selected = True
+                    control.selected = True
                     maze1 = Map(MAP1)
                 elif event.key == K_F2:
-                    selected = True
+                    control.selected = True
                     maze1 = Map(MAP2)
 
     maze1.game_info(window, "Picked up tools:")
@@ -75,7 +74,7 @@ while game:
 
     grabbed_tools = []
 
-    while playing:
+    while control.playing:
         for event in get_input():
 
             # To accelerate repeating key strokes:
@@ -90,8 +89,8 @@ while game:
 
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 time.sleep(1)
-                playing = False
-                home_page = True
+                control.playing = False
+                control.home_page = True
 
             elif event.type == KEYDOWN:
                 if event.key == K_RIGHT:
@@ -105,9 +104,9 @@ while game:
 
         maze1.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
-        if win == True:
+        if control.win == True:
             macgyver.display(window)
-        if lose == False:
+        if control.lose == False:
             guard.display(window)
 
         """Display tools if they haven't been taken"""
@@ -131,12 +130,12 @@ while game:
             and macgyver.case_number_y == 14
             and len(grabbed_tools) == 3
         ):
-            if over == True:
+            if control.over == True:
                 print("You win!")
                 """SOUND settings"""
                 win_sound.play()
-            over = False
-            lose = True
+            control.over = False
+            control.lose = True
             maze1.warden_asleep_info(
                 window, "You win! You asleepped the warden!", COLOR_WIN
             )
@@ -146,11 +145,11 @@ while game:
             and len(grabbed_tools) != 3
         ):
             maze1.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-            if over == True:
+            if control.over == True:
                 print("You lose!")
                 """SOUND settings"""
                 game_over_sound.play()
-            win = False
-            over = False
+            control.win = False
+            control.over = False
 
         pygame.display.flip()

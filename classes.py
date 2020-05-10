@@ -157,3 +157,15 @@ class Tools(BaseSprite):
 
         """To avoid tools'superposition"""
         self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
+
+class Control():
+
+    def __init__(self, game=True, home_page=True, selected=False, \
+playing=False, over = True, win = True, lose = False):
+        self.game= game
+        self.home_page=home_page
+        self.playing=playing
+        self.over = over
+        self.win = win
+        self.lose = lose
+
