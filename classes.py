@@ -28,7 +28,7 @@ def parse_array(map_file):
 class Map:
     """build the map from map*.txt files"""
 
-    def __init__(self, map_file):
+    def __init__(self, map_file=MAP1):
         """Generates an array in order to display the maze"""
         self.maze_array=parse_array(map_file)
 

@@ -9,6 +9,8 @@ from pygame.locals import *
 from classes import *
 from constants import *
 
+import pdb
+
 pygame.init()
 
 # opening of window Pygame
@@ -25,12 +27,31 @@ home = Homepage(HOMEPAGE_IMAGE)
 
 control=Control()
 
+maze=Map()
+
 def display():
     home.show(window)
     pygame.display.flip()
 
 def get_input():
     return pygame.event.get()
+
+def handle_input_home():
+    for event in get_input():
+                if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                    control.game = False
+                    control.home_page = False
+                if event.type == KEYDOWN:
+                    if event.key == K_RETURN or event.key == K_KP_ENTER:
+                        if control.selected == True:
+                            control.home_page = False
+                            control.playing = True
+                    if event.key == K_F1:
+                        control.selected = True
+                        maze = Map(MAP1)
+                    elif event.key == K_F2:
+                        control.selected = True
+                        maze = Map(MAP2)
 
 while control.game:
 
@@ -41,35 +62,20 @@ while control.game:
     control.lose = False
     control.selected = False
 
-
     while control.home_page:
-        for event in get_input():
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                control.game = False
-                control.home_page = False
-            if event.type == KEYDOWN:
-                if event.key == K_RETURN or event.key == K_KP_ENTER:
-                    if control.selected == True:
-                        control.home_page = False
-                        control.playing = True
-                if event.key == K_F1:
-                    control.selected = True
-                    maze1 = Map(MAP1)
-                elif event.key == K_F2:
-                    control.selected = True
-                    maze1 = Map(MAP2)
+        handle_input_home()
 
-    maze1.game_info(window, "Picked up tools:")
+    maze.game_info(window, "Picked up tools:")
     guard = Warden(WARDEN_IMAGE)
     guard.position(14, 14)
-    macgyver = MacGyver(maze1, MACGYVER_IMAGE)
+    macgyver = MacGyver(maze, MACGYVER_IMAGE)
     macgyver.position()
 
     list_tool = []
     for tool_name, tool_image in TOOL_LIST.items():
-        tool = Tools(maze1, tool_image, tool_name)
+        tool = Tools(maze, tool_image, tool_name)
         tool.position()
-        tool.place_item(maze1)
+        tool.place_item(maze)
         list_tool.append(tool)
 
     grabbed_tools = []
@@ -102,7 +108,7 @@ while control.game:
                 if event.key == K_DOWN:
                     macgyver.move("down")
 
-        maze1.display_map(window)
+        maze.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
         if control.win == True:
             macgyver.display(window)
@@ -136,7 +142,7 @@ while control.game:
                 win_sound.play()
             control.over = False
             control.lose = True
-            maze1.warden_asleep_info(
+            maze.warden_asleep_info(
                 window, "You win! You asleepped the warden!", COLOR_WIN
             )
         elif (
@@ -144,7 +150,7 @@ while control.game:
             and macgyver.case_number_y == 14
             and len(grabbed_tools) != 3
         ):
-            maze1.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
+            maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
             if control.over == True:
                 print("You lose!")
                 """SOUND settings"""
