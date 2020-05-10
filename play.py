@@ -27,19 +27,24 @@ playing = False
 game = True
 home_page = True
 
-while game:
-
+def display():
     home.show(window)
     pygame.display.flip()
+
+def get_input():
+    return pygame.event.get()
+
+while game:
+
+    display()
 
     over = True
     win = True
     lose = False
-    selected = False
+
 
     while home_page:
-
-        for event in pygame.event.get():
+        for event in get_input():
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 game = False
                 home_page = False
@@ -71,7 +76,7 @@ while game:
     grabbed_tools = []
 
     while playing:
-        for event in pygame.event.get():
+        for event in get_input():
 
             # To accelerate repeating key strokes:
             if event.type == KEYDOWN:
