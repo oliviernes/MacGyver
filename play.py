@@ -53,6 +53,34 @@ def handle_input_home():
                         control.selected = True
                         maze = Map(MAP2)
 
+def handle_input():
+    for event in get_input():
+
+        # To accelerate repeating key strokes:
+        if event.type == KEYDOWN:
+            if event.key == K_a:
+                pygame.key.set_repeat(10, 100)
+
+        # To slow down with one move each key stroke:
+        if event.type == KEYDOWN:
+            if event.key == K_s:
+                pygame.key.set_repeat()
+
+        if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+            time.sleep(1)
+            control.playing = False
+            control.home_page = True
+
+        elif event.type == KEYDOWN:
+            if event.key == K_RIGHT:
+                macgyver.move("right")
+            if event.key == K_LEFT:
+                macgyver.move("left")
+            if event.key == K_UP:
+                macgyver.move("up")
+            if event.key == K_DOWN:
+                macgyver.move("down")
+
 while control.game:
 
     display()
@@ -81,32 +109,7 @@ while control.game:
     grabbed_tools = []
 
     while control.playing:
-        for event in get_input():
-
-            # To accelerate repeating key strokes:
-            if event.type == KEYDOWN:
-                if event.key == K_a:
-                    pygame.key.set_repeat(10, 100)
-
-            # To slow down with one move each key stroke:
-            if event.type == KEYDOWN:
-                if event.key == K_s:
-                    pygame.key.set_repeat()
-
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                time.sleep(1)
-                control.playing = False
-                control.home_page = True
-
-            elif event.type == KEYDOWN:
-                if event.key == K_RIGHT:
-                    macgyver.move("right")
-                if event.key == K_LEFT:
-                    macgyver.move("left")
-                if event.key == K_UP:
-                    macgyver.move("up")
-                if event.key == K_DOWN:
-                    macgyver.move("down")
+        handle_input()
 
         maze.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
