@@ -2,17 +2,17 @@ import pygame
 import random
 from random import randint
 from constants import *
+from pygame.locals import *
 
+#~ class Homepage:
+    #~ """Show homepage"""
 
-class Homepage:
-    """Show homepage"""
+    #~ def __init__(self, homepage):
+        #~ self.homepage = homepage
 
-    def __init__(self, homepage):
-        self.homepage = homepage
-
-    def show(self, window):
-        page = pygame.image.load(self.homepage).convert()
-        window.blit(page, (0, 0))
+    #~ def show(self, window):
+        #~ page = pygame.image.load(self.homepage).convert()
+        #~ window.blit(page, (0, 0))
 
 def parse_array(map_file):
     with open(map_file, "r") as maze_file:
@@ -169,3 +169,21 @@ playing=False, over = True, win = True, lose = False):
         self.win = win
         self.lose = lose
 
+class Game_Manager():
+
+    def __init__(self, pygame):
+        self.pygame=pygame.init()
+
+    def window(self):
+        return pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
+
+    def win_sound(self):
+        return pygame.mixer.Sound(WIN_SOUND)
+
+    def game_over_sound(self):
+        return pygame.mixer.Sound(GAME_OVER_SOUND)
+
+    def home_page(self, homepage, window):
+        self.homepage = homepage
+        page = pygame.image.load(self.homepage).convert()
+        window.blit(page, (0, 0))

@@ -11,26 +11,29 @@ from constants import *
 
 import pdb
 
-pygame.init()
+#~ pygame.init()
+
+game=Game_Manager(pygame)
 
 # opening of window Pygame
 
-# window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
-window = pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
+window=game.window()
 
 # sounds objects:
 
-win_sound = pygame.mixer.Sound(WIN_SOUND)
-game_over_sound = pygame.mixer.Sound(GAME_OVER_SOUND)
+win_sound = game.win_sound()
+game_over_sound = game.game_over_sound()
 
-home = Homepage(HOMEPAGE_IMAGE)
+# Initialize control object:
 
 control=Control()
+
+# Initialize the maze:
 
 maze=Map()
 
 def display():
-    home.show(window)
+    game.home_page(HOMEPAGE_IMAGE, window)
     pygame.display.flip()
 
 def get_input():
@@ -80,6 +83,35 @@ def handle_input():
                 macgyver.move("up")
             if event.key == K_DOWN:
                 macgyver.move("down")
+
+def check_victory_condition():
+    if (
+        macgyver.case_number_x == 14
+        and macgyver.case_number_y == 14
+        and len(grabbed_tools) == 3
+    ):
+        if control.over == True:
+            print("You win!")
+            """SOUND settings"""
+            win_sound.play()
+        control.over = False
+        control.lose = True
+        maze.warden_asleep_info(
+            window, "You win! You asleepped the warden!", COLOR_WIN
+        )
+    elif (
+        macgyver.case_number_x == 14
+        and macgyver.case_number_y == 14
+        and len(grabbed_tools) != 3
+    ):
+        maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
+        if control.over == True:
+            print("You lose!")
+            """SOUND settings"""
+            game_over_sound.play()
+        control.win = False
+        control.over = False
+
 
 while control.game:
 
@@ -134,31 +166,6 @@ while control.game:
 
         """Check items' number when MacGyver reach the warden:"""
 
-        if (
-            macgyver.case_number_x == 14
-            and macgyver.case_number_y == 14
-            and len(grabbed_tools) == 3
-        ):
-            if control.over == True:
-                print("You win!")
-                """SOUND settings"""
-                win_sound.play()
-            control.over = False
-            control.lose = True
-            maze.warden_asleep_info(
-                window, "You win! You asleepped the warden!", COLOR_WIN
-            )
-        elif (
-            macgyver.case_number_x == 14
-            and macgyver.case_number_y == 14
-            and len(grabbed_tools) != 3
-        ):
-            maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-            if control.over == True:
-                print("You lose!")
-                """SOUND settings"""
-                game_over_sound.play()
-            control.win = False
-            control.over = False
+        check_victory_condition()
 
         pygame.display.flip()
