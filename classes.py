@@ -4,16 +4,6 @@ from random import randint
 from constants import *
 from pygame.locals import *
 
-#~ class Homepage:
-    #~ """Show homepage"""
-
-    #~ def __init__(self, homepage):
-        #~ self.homepage = homepage
-
-    #~ def show(self, window):
-        #~ page = pygame.image.load(self.homepage).convert()
-        #~ window.blit(page, (0, 0))
-
 def parse_array(map_file):
     with open(map_file, "r") as maze_file:
         maze_list = []

@@ -32,6 +32,8 @@ control=Control()
 
 maze=Map()
 
+# Add functions used in the game loop:
+
 def display():
     game.home_page(HOMEPAGE_IMAGE, window)
     pygame.display.flip()
@@ -112,6 +114,7 @@ def check_victory_condition():
         control.win = False
         control.over = False
 
+# Game loop:
 
 while control.game:
 
