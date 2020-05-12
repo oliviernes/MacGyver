@@ -10,7 +10,7 @@ class Map:
 
     def __init__(self, map_file=MAP1):
         """Generates an array in order to display the maze"""
-        self.maze_array=self.parse_array(map_file)
+        self.maze_array = self.parse_array(map_file)
 
     def parse_array(self, map_file):
         with open(map_file, "r") as maze_file:
@@ -86,8 +86,7 @@ class MacGyver(BaseSprite):
         if direction == "right":
             if self.case_number_x < (SPRITES_NUMBER - 1):
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x\
-+ 1]
+                    self.maze.maze_array[self.case_number_y][self.case_number_x + 1]
                     != "m"
                 ):
                     self.case_number_x += 1
@@ -96,8 +95,7 @@ class MacGyver(BaseSprite):
         if direction == "left":
             if self.case_number_x > 0:
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x\
-- 1]
+                    self.maze.maze_array[self.case_number_y][self.case_number_x - 1]
                     != "m"
                 ):
                     self.case_number_x -= 1
@@ -125,8 +123,7 @@ class MacGyver(BaseSprite):
         """bug of the sound_tools: Fatal Python error: take_gil: NULL tstate"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
-            if self.x == tool.x and self.y == tool.y and tool.name not in\
- grabbed_tools:
+            if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
                 grabbed_tools.append(tool.name)
                 """SOUND settings"""
                 sound_tools.play()
@@ -143,8 +140,7 @@ class Tools(BaseSprite):
         self.name = name
 
     def place_item(self, maze):
-        while self.maze.maze_array[self.case_number_y][self.case_number_x]\
- != "0":
+        while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
             self.case_number_x = randint(1, 14)
             self.case_number_y = randint(1, 14)
             self.x = self.case_number_x * SPRITE_SIZE
@@ -153,21 +149,29 @@ class Tools(BaseSprite):
         """To avoid tools'superposition"""
         self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
 
-class Control():
 
-    def __init__(self, game=True, home_page=True, selected=False, \
-playing=False, over = True, win = True, lose = False):
-        self.game= game
-        self.home_page=home_page
-        self.playing=playing
+class Control:
+    def __init__(
+        self,
+        game=True,
+        home_page=True,
+        selected=False,
+        playing=False,
+        over=True,
+        win=True,
+        lose=False,
+    ):
+        self.game = game
+        self.home_page = home_page
+        self.playing = playing
         self.over = over
         self.win = win
         self.lose = lose
 
-class Game_Manager(Map):
 
+class Game_Manager(Map):
     def __init__(self, pygame):
-        self.pygame=pygame.init()
+        self.pygame = pygame.init()
         super().__init__()
 
     def window(self):
@@ -193,21 +197,20 @@ class Game_Manager(Map):
 
     def handle_input_home(self, control):
         for event in self.get_input():
-                    if event.type == QUIT or event.type == KEYDOWN and \
-event.key == K_ESCAPE:
-                        control.game = False
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                control.game = False
+                control.home_page = False
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN or event.key == K_KP_ENTER:
+                    if control.selected == True:
                         control.home_page = False
-                    if event.type == KEYDOWN:
-                        if event.key == K_RETURN or event.key == K_KP_ENTER:
-                            if control.selected == True:
-                                control.home_page = False
-                                control.playing = True
-                        if event.key == K_F1:
-                            control.selected = True
-                            maze = Map(MAP1)
-                        elif event.key == K_F2:
-                            control.selected = True
-                            maze = Map(MAP2)
+                        control.playing = True
+                if event.key == K_F1:
+                    control.selected = True
+                    maze = Map(MAP1)
+                elif event.key == K_F2:
+                    control.selected = True
+                    maze = Map(MAP2)
 
     def handle_input(self, macgyver, time, control):
         for event in self.get_input():
@@ -222,8 +225,7 @@ event.key == K_ESCAPE:
                 if event.key == K_s:
                     pygame.key.set_repeat()
 
-            if event.type == QUIT or event.type == KEYDOWN and event.key \
-== K_ESCAPE:
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 time.sleep(1)
                 control.playing = False
                 control.home_page = True
@@ -238,8 +240,9 @@ event.key == K_ESCAPE:
                 if event.key == K_DOWN:
                     macgyver.move("down")
 
-    def check_victory_condition(self, macgyver, grabbed_tools, control,\
- win_sound, game_over_sound, maze, window):
+    def check_victory_condition(
+        self, macgyver, grabbed_tools, control, win_sound, game_over_sound, maze, window
+    ):
         if (
             macgyver.case_number_x == 14
             and macgyver.case_number_y == 14

@@ -11,11 +11,11 @@ from constants import *
 
 import pdb
 
-game=Game_Manager(pygame)
+game = Game_Manager(pygame)
 
 # opening of window Pygame
 
-window=game.window()
+window = game.window()
 
 # sounds objects:
 
@@ -24,7 +24,7 @@ game_over_sound = game.game_over_sound()
 
 # Initialize control object:
 
-control=Control()
+control = Control()
 
 # Game loop:
 
@@ -81,7 +81,8 @@ while control.game:
 
         """Check items' number when MacGyver reach the warden:"""
 
-        game.check_victory_condition(macgyver, grabbed_tools, control,\
- win_sound, game_over_sound, game, window)
+        game.check_victory_condition(
+            macgyver, grabbed_tools, control, win_sound, game_over_sound, game, window
+        )
 
         pygame.display.flip()
