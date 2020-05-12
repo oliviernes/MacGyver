@@ -1,6 +1,6 @@
 __pycache__/
 
-extra_files/code_accelerate.py
+## To ignore temporary emacs files:
 .gitignore~
 constants.py~
 map.py~
