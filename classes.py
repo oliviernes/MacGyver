@@ -4,23 +4,24 @@ from random import randint
 from constants import *
 from pygame.locals import *
 
-def parse_array(map_file):
-    with open(map_file, "r") as maze_file:
-        maze_list = []
-        for line in maze_file:
-            line_level = []
-            for sprite in line:
-                if sprite != "\n":
-                    line_level.append(sprite)
-            maze_list.append(line_level)
-    return maze_list
 
 class Map:
     """build the map from map*.txt files"""
 
     def __init__(self, map_file=MAP1):
         """Generates an array in order to display the maze"""
-        self.maze_array=parse_array(map_file)
+        self.maze_array=self.parse_array(map_file)
+
+    def parse_array(self, map_file):
+        with open(map_file, "r") as maze_file:
+            maze_list = []
+            for line in maze_file:
+                line_level = []
+                for sprite in line:
+                    if sprite != "\n":
+                        line_level.append(sprite)
+                maze_list.append(line_level)
+        return maze_list
 
     def display_map(self, window):
         """display the map"""
