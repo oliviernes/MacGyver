@@ -13,9 +13,13 @@ MacGyver is trapped inside a labyrinth where the exit is guard by a
 The game works on python 3.7.4 environment.
 
 git clone https://github.com/oliviernes/MacGyver.git
+
 cd MacGyver
+
 virtualenv -p python3 env
+
 source env/bin/activate
+
 pip install -r requirements.txt
 
 ## Launch of the game:
