@@ -255,7 +255,7 @@ class Game_Manager(Map):
             control.over = False
             control.lose = True
             maze.warden_asleep_info(
-                window, "You win! You asleepped the warden!", COLOR_WIN
+                window, "You win! You put to sleep the guard!", COLOR_WIN
             )
         elif (
             macgyver.case_number_x == 14
