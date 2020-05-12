@@ -86,7 +86,8 @@ class MacGyver(BaseSprite):
         if direction == "right":
             if self.case_number_x < (SPRITES_NUMBER - 1):
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x + 1]
+                    self.maze.maze_array[self.case_number_y][self.case_number_x\
++ 1]
                     != "m"
                 ):
                     self.case_number_x += 1
@@ -95,7 +96,8 @@ class MacGyver(BaseSprite):
         if direction == "left":
             if self.case_number_x > 0:
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x - 1]
+                    self.maze.maze_array[self.case_number_y][self.case_number_x\
+- 1]
                     != "m"
                 ):
                     self.case_number_x -= 1
@@ -123,7 +125,8 @@ class MacGyver(BaseSprite):
         """bug of the sound_tools: Fatal Python error: take_gil: NULL tstate"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
-            if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
+            if self.x == tool.x and self.y == tool.y and tool.name not in\
+ grabbed_tools:
                 grabbed_tools.append(tool.name)
                 """SOUND settings"""
                 sound_tools.play()
@@ -140,7 +143,8 @@ class Tools(BaseSprite):
         self.name = name
 
     def place_item(self, maze):
-        while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
+        while self.maze.maze_array[self.case_number_y][self.case_number_x]\
+ != "0":
             self.case_number_x = randint(1, 14)
             self.case_number_y = randint(1, 14)
             self.x = self.case_number_x * SPRITE_SIZE
@@ -189,7 +193,8 @@ class Game_Manager(Map):
 
     def handle_input_home(self, control):
         for event in self.get_input():
-                    if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                    if event.type == QUIT or event.type == KEYDOWN and \
+event.key == K_ESCAPE:
                         control.game = False
                         control.home_page = False
                     if event.type == KEYDOWN:
@@ -217,7 +222,8 @@ class Game_Manager(Map):
                 if event.key == K_s:
                     pygame.key.set_repeat()
 
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+            if event.type == QUIT or event.type == KEYDOWN and event.key \
+== K_ESCAPE:
                 time.sleep(1)
                 control.playing = False
                 control.home_page = True
