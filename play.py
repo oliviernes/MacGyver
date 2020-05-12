@@ -11,8 +11,6 @@ from constants import *
 
 import pdb
 
-#~ pygame.init()
-
 game=Game_Manager(pygame)
 
 # opening of window Pygame
@@ -28,97 +26,11 @@ game_over_sound = game.game_over_sound()
 
 control=Control()
 
-# Initialize the maze:
-
-maze=Map()
-
-# Add functions used in the game loop:
-
-def display():
-    game.home_page(HOMEPAGE_IMAGE, window)
-    pygame.display.flip()
-
-def get_input():
-    return pygame.event.get()
-
-def handle_input_home():
-    for event in get_input():
-                if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                    control.game = False
-                    control.home_page = False
-                if event.type == KEYDOWN:
-                    if event.key == K_RETURN or event.key == K_KP_ENTER:
-                        if control.selected == True:
-                            control.home_page = False
-                            control.playing = True
-                    if event.key == K_F1:
-                        control.selected = True
-                        maze = Map(MAP1)
-                    elif event.key == K_F2:
-                        control.selected = True
-                        maze = Map(MAP2)
-
-def handle_input():
-    for event in get_input():
-
-        # To accelerate repeating key strokes:
-        if event.type == KEYDOWN:
-            if event.key == K_a:
-                pygame.key.set_repeat(10, 100)
-
-        # To slow down with one move each key stroke:
-        if event.type == KEYDOWN:
-            if event.key == K_s:
-                pygame.key.set_repeat()
-
-        if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-            time.sleep(1)
-            control.playing = False
-            control.home_page = True
-
-        elif event.type == KEYDOWN:
-            if event.key == K_RIGHT:
-                macgyver.move("right")
-            if event.key == K_LEFT:
-                macgyver.move("left")
-            if event.key == K_UP:
-                macgyver.move("up")
-            if event.key == K_DOWN:
-                macgyver.move("down")
-
-def check_victory_condition():
-    if (
-        macgyver.case_number_x == 14
-        and macgyver.case_number_y == 14
-        and len(grabbed_tools) == 3
-    ):
-        if control.over == True:
-            print("You win!")
-            """SOUND settings"""
-            win_sound.play()
-        control.over = False
-        control.lose = True
-        maze.warden_asleep_info(
-            window, "You win! You asleepped the warden!", COLOR_WIN
-        )
-    elif (
-        macgyver.case_number_x == 14
-        and macgyver.case_number_y == 14
-        and len(grabbed_tools) != 3
-    ):
-        maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-        if control.over == True:
-            print("You lose!")
-            """SOUND settings"""
-            game_over_sound.play()
-        control.win = False
-        control.over = False
-
 # Game loop:
 
 while control.game:
 
-    display()
+    game.display(HOMEPAGE_IMAGE, window)
 
     control.over = True
     control.win = True
@@ -126,27 +38,27 @@ while control.game:
     control.selected = False
 
     while control.home_page:
-        handle_input_home()
+        game.handle_input_home(control)
 
-    maze.game_info(window, "Picked up tools:")
+    game.game_info(window, "Picked up tools:")
     guard = Warden(WARDEN_IMAGE)
     guard.position(14, 14)
-    macgyver = MacGyver(maze, MACGYVER_IMAGE)
+    macgyver = MacGyver(game, MACGYVER_IMAGE)
     macgyver.position()
 
     list_tool = []
     for tool_name, tool_image in TOOL_LIST.items():
-        tool = Tools(maze, tool_image, tool_name)
+        tool = Tools(game, tool_image, tool_name)
         tool.position()
-        tool.place_item(maze)
+        tool.place_item(game)
         list_tool.append(tool)
 
     grabbed_tools = []
 
     while control.playing:
-        handle_input()
+        game.handle_input(macgyver, time, control)
 
-        maze.display_map(window)
+        game.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
         if control.win == True:
             macgyver.display(window)
@@ -169,6 +81,7 @@ while control.game:
 
         """Check items' number when MacGyver reach the warden:"""
 
-        check_victory_condition()
+        game.check_victory_condition(macgyver, grabbed_tools, control,\
+ win_sound, game_over_sound, game, window)
 
         pygame.display.flip()

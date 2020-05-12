@@ -160,10 +160,11 @@ playing=False, over = True, win = True, lose = False):
         self.win = win
         self.lose = lose
 
-class Game_Manager():
+class Game_Manager(Map):
 
     def __init__(self, pygame):
         self.pygame=pygame.init()
+        super().__init__()
 
     def window(self):
         return pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
@@ -178,3 +179,84 @@ class Game_Manager():
         self.homepage = homepage
         page = pygame.image.load(self.homepage).convert()
         window.blit(page, (0, 0))
+
+    def display(self, HOMEPAGE_IMAGE, window):
+        self.home_page(HOMEPAGE_IMAGE, window)
+        pygame.display.flip()
+
+    def get_input(self):
+        return pygame.event.get()
+
+    def handle_input_home(self, control):
+        for event in self.get_input():
+                    if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                        control.game = False
+                        control.home_page = False
+                    if event.type == KEYDOWN:
+                        if event.key == K_RETURN or event.key == K_KP_ENTER:
+                            if control.selected == True:
+                                control.home_page = False
+                                control.playing = True
+                        if event.key == K_F1:
+                            control.selected = True
+                            maze = Map(MAP1)
+                        elif event.key == K_F2:
+                            control.selected = True
+                            maze = Map(MAP2)
+
+    def handle_input(self, macgyver, time, control):
+        for event in self.get_input():
+
+            # To accelerate repeating key strokes:
+            if event.type == KEYDOWN:
+                if event.key == K_a:
+                    pygame.key.set_repeat(10, 100)
+
+            # To slow down with one move each key stroke:
+            if event.type == KEYDOWN:
+                if event.key == K_s:
+                    pygame.key.set_repeat()
+
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                time.sleep(1)
+                control.playing = False
+                control.home_page = True
+
+            elif event.type == KEYDOWN:
+                if event.key == K_RIGHT:
+                    macgyver.move("right")
+                if event.key == K_LEFT:
+                    macgyver.move("left")
+                if event.key == K_UP:
+                    macgyver.move("up")
+                if event.key == K_DOWN:
+                    macgyver.move("down")
+
+    def check_victory_condition(self, macgyver, grabbed_tools, control,\
+ win_sound, game_over_sound, maze, window):
+        if (
+            macgyver.case_number_x == 14
+            and macgyver.case_number_y == 14
+            and len(grabbed_tools) == 3
+        ):
+            if control.over == True:
+                print("You win!")
+                """SOUND settings"""
+                win_sound.play()
+            control.over = False
+            control.lose = True
+            maze.warden_asleep_info(
+                window, "You win! You asleepped the warden!", COLOR_WIN
+            )
+        elif (
+            macgyver.case_number_x == 14
+            and macgyver.case_number_y == 14
+            and len(grabbed_tools) != 3
+        ):
+            maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
+            if control.over == True:
+                print("You lose!")
+                """SOUND settings"""
+                game_over_sound.play()
+            control.win = False
+            control.over = False
