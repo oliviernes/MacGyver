@@ -120,7 +120,7 @@ class MacGyver(BaseSprite):
                     self.y = self.case_number_y * SPRITE_SIZE
 
     def check_tools(self, list_tool, grabbed_tools):
-        """bug of the sound_tools: Fatal Python error: take_gil: NULL tstate"""
+        """Check grabbed tools and the inventory"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
             if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
