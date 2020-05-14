@@ -151,6 +151,7 @@ class Tools(BaseSprite):
 
 
 class Control:
+    """Class to control the value of boolans needed for several methods"""
     def __init__(
         self,
         game=True,
