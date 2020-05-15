@@ -4,8 +4,6 @@
 import pygame
 import time
 
-from pygame.locals import *
-
 from classes import *
 from constants import *
 
