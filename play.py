@@ -4,7 +4,11 @@
 import time
 import pygame
 
-from classes import Game_Manager, Control, Warden, MacGyver, Tools
+#~ from classes import Game_Manager, Control, Warden, MacGyver, Tools
+
+from display import Warden, MacGyver, Tools
+from manager import Game_Manager, Control
+
 from constants import (
     HOMEPAGE_IMAGE,
     TOOL_LIST,
