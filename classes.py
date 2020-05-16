@@ -206,7 +206,7 @@ class Game_Manager(Map):
                 control.home_page = False
             if event.type == KEYDOWN:
                 if event.key == K_RETURN or event.key == K_KP_ENTER:
-                    if control.selected == True:
+                    if control.selected is True:
                         control.home_page = False
                         control.playing = True
                 if event.key == K_F1:
@@ -252,7 +252,7 @@ class Game_Manager(Map):
             and macgyver.case_num_y == 14
             and len(grabbed_tools) == 3
         ):
-            if control.over == True:
+            if control.over is True:
                 print("You win!")
                 """SOUND settings"""
                 win_sound.play()
@@ -267,7 +267,7 @@ class Game_Manager(Map):
             and len(grabbed_tools) != 3
         ):
             maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
-            if control.over == True:
+            if control.over is True:
                 print("You lose!")
                 """SOUND settings"""
                 game_over_sound.play()

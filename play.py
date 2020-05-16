@@ -1,13 +1,13 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-import pygame
 import time
+import pygame
 
-from classes import *
-from constants import *
+from classes import Game_Manager, Control, Warden, MacGyver, Tools
+from constants import HOMEPAGE_IMAGE, TOOL_LIST, MACGYVER_IMAGE, WARDEN_IMAGE,\
+ SPRITE_SIZE, SPRITES_NUMBER
 
-import pdb
 
 game = Game_Manager(pygame)
 
@@ -58,9 +58,9 @@ while control.game:
 
         game.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
-        if control.win == True:
+        if control.win is True:
             macgyver.display(window)
-        if control.lose == False:
+        if control.lose is False:
             guard.display(window)
 
         """Display tools if they haven't been taken"""
