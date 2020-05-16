@@ -5,8 +5,14 @@ import time
 import pygame
 
 from classes import Game_Manager, Control, Warden, MacGyver, Tools
-from constants import HOMEPAGE_IMAGE, TOOL_LIST, MACGYVER_IMAGE, WARDEN_IMAGE,\
- SPRITE_SIZE, SPRITES_NUMBER
+from constants import (
+    HOMEPAGE_IMAGE,
+    TOOL_LIST,
+    MACGYVER_IMAGE,
+    WARDEN_IMAGE,
+    SPRITE_SIZE,
+    SPRITES_NUMBER,
+)
 
 
 game = Game_Manager(pygame)

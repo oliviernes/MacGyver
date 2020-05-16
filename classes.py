@@ -1,10 +1,36 @@
 import pygame
 from random import randint
-from constants import WALL_IMAGE, FLOOR_IMAGE, SPRITES_NUMBER, SPRITE_SIZE, \
-WINDOW_WIDE, WINDOW_LENGTH, WIN_SOUND, GAME_OVER_SOUND, HOMEPAGE_IMAGE, \
-MAP1, MAP2, COLOR_WIN, COLOR_LOSE, TOOLS_SOUND
-from pygame.locals import K_F2, K_F1, K_KP_ENTER, K_ESCAPE, KEYDOWN, QUIT, \
-K_RETURN, K_a, K_s, K_DOWN, K_UP, K_LEFT, K_RIGHT
+from constants import (
+    WALL_IMAGE,
+    FLOOR_IMAGE,
+    SPRITES_NUMBER,
+    SPRITE_SIZE,
+    WINDOW_WIDE,
+    WINDOW_LENGTH,
+    WIN_SOUND,
+    GAME_OVER_SOUND,
+    HOMEPAGE_IMAGE,
+    MAP1,
+    MAP2,
+    COLOR_WIN,
+    COLOR_LOSE,
+    TOOLS_SOUND,
+)
+from pygame.locals import (
+    K_F2,
+    K_F1,
+    K_KP_ENTER,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+    K_RETURN,
+    K_a,
+    K_s,
+    K_DOWN,
+    K_UP,
+    K_LEFT,
+    K_RIGHT,
+)
 
 
 class Map:
@@ -87,37 +113,25 @@ class MacGyver(BaseSprite):
         """move MacGiver according to the direction input"""
         if direction == "right":
             if self.case_num_x < (SPRITES_NUMBER - 1):
-                if (
-                    self.maze.maze_array[self.case_num_y][self.case_num_x + 1]
-                    != "m"
-                ):
+                if self.maze.maze_array[self.case_num_y][self.case_num_x + 1] != "m":
                     self.case_num_x += 1
                     self.x = self.case_num_x * SPRITE_SIZE
 
         if direction == "left":
             if self.case_num_x > 0:
-                if (
-                    self.maze.maze_array[self.case_num_y][self.case_num_x - 1]
-                    != "m"
-                ):
+                if self.maze.maze_array[self.case_num_y][self.case_num_x - 1] != "m":
                     self.case_num_x -= 1
                     self.x = self.case_num_x * SPRITE_SIZE
 
         if direction == "up":
             if self.case_num_y > 0:
-                if (
-                    self.maze.maze_array[self.case_num_y - 1][self.case_num_x]
-                    != "m"
-                ):
+                if self.maze.maze_array[self.case_num_y - 1][self.case_num_x] != "m":
                     self.case_num_y -= 1
                     self.y = self.case_num_y * SPRITE_SIZE
 
         if direction == "down":
             if self.case_num_y < (SPRITES_NUMBER - 1):
-                if (
-                    self.maze.maze_array[self.case_num_y + 1][self.case_num_x]
-                    != "m"
-                ):
+                if self.maze.maze_array[self.case_num_y + 1][self.case_num_x] != "m":
                     self.case_num_y += 1
                     self.y = self.case_num_y * SPRITE_SIZE
 
@@ -125,8 +139,7 @@ class MacGyver(BaseSprite):
         """Check grabbed tools and the inventory"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
-            if self.x == tool.x and self.y == tool.y and tool.name not \
-in grabbed_tools:
+            if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
                 grabbed_tools.append(tool.name)
                 """SOUND settings"""
                 sound_tools.play()
@@ -155,6 +168,7 @@ class Tools(BaseSprite):
 
 class Control:
     """Class to control the value of boolans needed for several methods"""
+
     def __init__(
         self,
         game=True,
