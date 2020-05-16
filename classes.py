@@ -56,12 +56,12 @@ class BaseSprite:
     def __init__(self, image):
         self.image = pygame.image.load(image).convert_alpha()
 
-    def position(self, case_number_x=0, case_number_y=0):
+    def position(self, case_num_x=0, case_num_y=0):
         """return object's position"""
-        self.case_number_x = case_number_x
-        self.case_number_y = case_number_y
-        self.x = self.case_number_x * SPRITE_SIZE
-        self.y = self.case_number_y * SPRITE_SIZE
+        self.case_num_x = case_num_x
+        self.case_num_y = case_num_y
+        self.x = self.case_num_x * SPRITE_SIZE
+        self.y = self.case_num_y * SPRITE_SIZE
         return (self.x, self.y)
 
     def display(self, window):
@@ -86,46 +86,47 @@ class MacGyver(BaseSprite):
     def move(self, direction):
         """move MacGiver according to the direction input"""
         if direction == "right":
-            if self.case_number_x < (SPRITES_NUMBER - 1):
+            if self.case_num_x < (SPRITES_NUMBER - 1):
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x + 1]
+                    self.maze.maze_array[self.case_num_y][self.case_num_x + 1]
                     != "m"
                 ):
-                    self.case_number_x += 1
-                    self.x = self.case_number_x * SPRITE_SIZE
+                    self.case_num_x += 1
+                    self.x = self.case_num_x * SPRITE_SIZE
 
         if direction == "left":
-            if self.case_number_x > 0:
+            if self.case_num_x > 0:
                 if (
-                    self.maze.maze_array[self.case_number_y][self.case_number_x - 1]
+                    self.maze.maze_array[self.case_num_y][self.case_num_x - 1]
                     != "m"
                 ):
-                    self.case_number_x -= 1
-                    self.x = self.case_number_x * SPRITE_SIZE
+                    self.case_num_x -= 1
+                    self.x = self.case_num_x * SPRITE_SIZE
 
         if direction == "up":
-            if self.case_number_y > 0:
+            if self.case_num_y > 0:
                 if (
-                    self.maze.maze_array[self.case_number_y - 1][self.case_number_x]
+                    self.maze.maze_array[self.case_num_y - 1][self.case_num_x]
                     != "m"
                 ):
-                    self.case_number_y -= 1
-                    self.y = self.case_number_y * SPRITE_SIZE
+                    self.case_num_y -= 1
+                    self.y = self.case_num_y * SPRITE_SIZE
 
         if direction == "down":
-            if self.case_number_y < (SPRITES_NUMBER - 1):
+            if self.case_num_y < (SPRITES_NUMBER - 1):
                 if (
-                    self.maze.maze_array[self.case_number_y + 1][self.case_number_x]
+                    self.maze.maze_array[self.case_num_y + 1][self.case_num_x]
                     != "m"
                 ):
-                    self.case_number_y += 1
-                    self.y = self.case_number_y * SPRITE_SIZE
+                    self.case_num_y += 1
+                    self.y = self.case_num_y * SPRITE_SIZE
 
     def check_tools(self, list_tool, grabbed_tools):
         """Check grabbed tools and the inventory"""
         sound_tools = pygame.mixer.Sound(TOOLS_SOUND)
         for tool in list_tool:
-            if self.x == tool.x and self.y == tool.y and tool.name not in grabbed_tools:
+            if self.x == tool.x and self.y == tool.y and tool.name not \
+in grabbed_tools:
                 grabbed_tools.append(tool.name)
                 """SOUND settings"""
                 sound_tools.play()
@@ -142,14 +143,14 @@ class Tools(BaseSprite):
         self.name = name
 
     def place_item(self, maze):
-        while self.maze.maze_array[self.case_number_y][self.case_number_x] != "0":
-            self.case_number_x = randint(1, 14)
-            self.case_number_y = randint(1, 14)
-            self.x = self.case_number_x * SPRITE_SIZE
-            self.y = self.case_number_y * SPRITE_SIZE
+        while self.maze.maze_array[self.case_num_y][self.case_num_x] != "0":
+            self.case_num_x = randint(1, 14)
+            self.case_num_y = randint(1, 14)
+            self.x = self.case_num_x * SPRITE_SIZE
+            self.y = self.case_num_y * SPRITE_SIZE
 
         """To avoid tools'superposition"""
-        self.maze.maze_array[self.case_number_y][self.case_number_x] = "T"
+        self.maze.maze_array[self.case_num_y][self.case_num_x] = "T"
 
 
 class Control:
@@ -247,8 +248,8 @@ class Game_Manager(Map):
         self, macgyver, grabbed_tools, control, win_sound, game_over_sound, maze, window
     ):
         if (
-            macgyver.case_number_x == 14
-            and macgyver.case_number_y == 14
+            macgyver.case_num_x == 14
+            and macgyver.case_num_y == 14
             and len(grabbed_tools) == 3
         ):
             if control.over == True:
@@ -261,8 +262,8 @@ class Game_Manager(Map):
                 window, "You win! You put to sleep the guard!", COLOR_WIN
             )
         elif (
-            macgyver.case_number_x == 14
-            and macgyver.case_number_y == 14
+            macgyver.case_num_x == 14
+            and macgyver.case_num_y == 14
             and len(grabbed_tools) != 3
         ):
             maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
