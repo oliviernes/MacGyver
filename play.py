@@ -4,10 +4,10 @@
 import time
 import pygame
 
-#~ from classes import Game_Manager, Control, Warden, MacGyver, Tools
+#~ from classes import GameManager, Control, Warden, MacGyver, Tools
 
 from display import Warden, MacGyver, Tools
-from manager import Game_Manager, Control
+from manager import GameManager, Control
 
 from constants import (
     HOMEPAGE_IMAGE,
@@ -19,7 +19,7 @@ from constants import (
 )
 
 
-game = Game_Manager(pygame)
+game = GameManager(pygame)
 
 # opening of window Pygame
 

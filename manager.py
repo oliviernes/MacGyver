@@ -1,18 +1,6 @@
+"""Manage the control of the game"""
+
 import pygame
-
-from display import Map
-
-from constants import (
-    WINDOW_WIDE,
-    WINDOW_LENGTH,
-    WIN_SOUND,
-    GAME_OVER_SOUND,
-    HOMEPAGE_IMAGE,
-    MAP1,
-    MAP2,
-    COLOR_WIN,
-    COLOR_LOSE,
-)
 
 from pygame.locals import (
     K_F2,
@@ -30,28 +18,44 @@ from pygame.locals import (
     K_RIGHT,
 )
 
+from constants import (
+    WINDOW_WIDE,
+    WINDOW_LENGTH,
+    WIN_SOUND,
+    GAME_OVER_SOUND,
+    HOMEPAGE_IMAGE,
+    MAP1,
+    MAP2,
+    COLOR_WIN,
+    COLOR_LOSE,
+)
+
+from display import Map
+
+
 class Control:
     """Class to control the value of boolans needed for several methods"""
 
     def __init__(
-        self,
-        game=True,
-        home_page=True,
-        selected=False,
-        playing=False,
-        over=True,
-        win=True,
-        lose=False,
+            self,
+            game=True,
+            home_page=True,
+            selected=False,
+            playing=False,
+            over=True,
+            win=True,
+            lose=False,
     ):
         self.game = game
         self.home_page = home_page
+        self.selected = selected
         self.playing = playing
         self.over = over
         self.win = win
         self.lose = lose
 
 
-class Game_Manager(Map):
+class GameManager(Map):
     def __init__(self, pygame):
         self.pygame = pygame.init()
         super().__init__()
@@ -123,12 +127,12 @@ class Game_Manager(Map):
                     macgyver.move("down")
 
     def check_victory_condition(
-        self, macgyver, grabbed_tools, control, win_sound, game_over_sound, maze, window
+            self, macgyver, grabbed_tools, control, win_sound, game_over_sound, maze, window
     ):
         if (
-            macgyver.case_num_x == 14
-            and macgyver.case_num_y == 14
-            and len(grabbed_tools) == 3
+                macgyver.case_num_x == 14
+                and macgyver.case_num_y == 14
+                and len(grabbed_tools) == 3
         ):
             if control.over is True:
                 print("You win!")
@@ -140,9 +144,9 @@ class Game_Manager(Map):
                 window, "You win! You put to sleep the guard!", COLOR_WIN
             )
         elif (
-            macgyver.case_num_x == 14
-            and macgyver.case_num_y == 14
-            and len(grabbed_tools) != 3
+                macgyver.case_num_x == 14
+                and macgyver.case_num_y == 14
+                and len(grabbed_tools) != 3
         ):
             maze.warden_asleep_info(window, "You lose! GAME OVER", COLOR_LOSE)
             if control.over is True:
@@ -151,4 +155,3 @@ class Game_Manager(Map):
                 game_over_sound.play()
             control.win = False
             control.over = False
-

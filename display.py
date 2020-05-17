@@ -5,31 +5,8 @@ from constants import (
     FLOOR_IMAGE,
     SPRITES_NUMBER,
     SPRITE_SIZE,
-    WINDOW_WIDE,
-    WINDOW_LENGTH,
-    WIN_SOUND,
-    GAME_OVER_SOUND,
-    HOMEPAGE_IMAGE,
     MAP1,
-    MAP2,
-    COLOR_WIN,
-    COLOR_LOSE,
     TOOLS_SOUND,
-)
-from pygame.locals import (
-    K_F2,
-    K_F1,
-    K_KP_ENTER,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
-    K_RETURN,
-    K_a,
-    K_s,
-    K_DOWN,
-    K_UP,
-    K_LEFT,
-    K_RIGHT,
 )
 
 
