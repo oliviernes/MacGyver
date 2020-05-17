@@ -54,11 +54,10 @@ class Control:
         self.win = win
         self.lose = lose
 
-
-class GameManager(Map):
-    def __init__(self, pygame):
+class MapManager(Map):
+    def __init__(self, pygame, MAP):
         self.pygame = pygame.init()
-        super().__init__()
+        super().__init__(MAP)
 
     def window(self):
         return pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
@@ -78,10 +77,14 @@ class GameManager(Map):
         self.home_page(HOMEPAGE_IMAGE, window)
         pygame.display.flip()
 
+class GameManager():
+    def __init__(self, pygame):
+        self.pygame = pygame.init()
+
     def get_input(self):
         return pygame.event.get()
 
-    def handle_input_home(self, control):
+    def handle_input_home(self, control, maze):
         for event in self.get_input():
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 control.game = False
@@ -93,10 +96,10 @@ class GameManager(Map):
                         control.playing = True
                 if event.key == K_F1:
                     control.selected = True
-                    maze = Map(MAP1)
+                    maze.__init__(pygame, MAP1)
                 elif event.key == K_F2:
                     control.selected = True
-                    maze = Map(MAP2)
+                    maze.__init__(pygame, MAP2)
 
     def handle_input(self, macgyver, time, control):
         for event in self.get_input():

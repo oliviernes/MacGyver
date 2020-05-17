@@ -13,7 +13,7 @@ from constants import (
 class Map:
     """build the map from map*.txt files"""
 
-    def __init__(self, map_file=MAP1):
+    def __init__(self, map_file):
         """Generates an array in order to display the maze"""
         self.maze_array = self.parse_array(map_file)
 

@@ -6,8 +6,8 @@ import pygame
 
 #~ from classes import GameManager, Control, Warden, MacGyver, Tools
 
-from display import Warden, MacGyver, Tools
-from manager import GameManager, Control
+from display import Warden, MacGyver, Tools, Map
+from manager import MapManager, GameManager, Control
 
 from constants import (
     HOMEPAGE_IMAGE,
@@ -16,19 +16,21 @@ from constants import (
     WARDEN_IMAGE,
     SPRITE_SIZE,
     SPRITES_NUMBER,
+    MAP1
 )
-
 
 game = GameManager(pygame)
 
+maze = MapManager(pygame, MAP1)
+
 # opening of window Pygame
 
-window = game.window()
+window = maze.window()
 
 # sounds objects:
 
-win_sound = game.win_sound()
-game_over_sound = game.game_over_sound()
+win_sound = maze.win_sound()
+game_over_sound = maze.game_over_sound()
 
 # Initialize control object:
 
@@ -38,7 +40,7 @@ control = Control()
 
 while control.game:
 
-    game.display(HOMEPAGE_IMAGE, window)
+    maze.display(HOMEPAGE_IMAGE, window)
 
     control.over = True
     control.win = True
@@ -46,17 +48,17 @@ while control.game:
     control.selected = False
 
     while control.home_page:
-        game.handle_input_home(control)
+        game.handle_input_home(control, maze)
 
-    game.game_info(window, "Picked up tools:")
+    maze.game_info(window, "Picked up tools:")
     guard = Warden(WARDEN_IMAGE)
     guard.position(14, 14)
-    macgyver = MacGyver(game, MACGYVER_IMAGE)
+    macgyver = MacGyver(maze, MACGYVER_IMAGE)
     macgyver.position()
 
     list_tool = []
     for tool_name, tool_image in TOOL_LIST.items():
-        tool = Tools(game, tool_image, tool_name)
+        tool = Tools(maze, tool_image, tool_name)
         tool.position()
         tool.place_item(game)
         list_tool.append(tool)
@@ -66,7 +68,7 @@ while control.game:
     while control.playing:
         game.handle_input(macgyver, time, control)
 
-        game.display_map(window)
+        maze.display_map(window)
         macgyver.check_tools(list_tool, grabbed_tools)
         if control.win is True:
             macgyver.display(window)
@@ -90,7 +92,7 @@ while control.game:
         """Check items' number when MacGyver reach the warden:"""
 
         game.check_victory_condition(
-            macgyver, grabbed_tools, control, win_sound, game_over_sound, game, window
+            macgyver, grabbed_tools, control, win_sound, game_over_sound, maze, window
         )
 
         pygame.display.flip()
