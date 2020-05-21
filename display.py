@@ -44,12 +44,12 @@ class Map:
 
     def game_info(self, window, msg):
         font = pygame.font.Font(None, 35)
-        text1 = font.render(msg, True, (255, 255, 255), (0, 0, 0))
+        text1 = font.render(msg, True, (255, 255, 255), (36, 9, 239))
         window.blit(text1, (0, SPRITE_SIZE * SPRITES_NUMBER))
 
     def warden_asleep_info(self, window, msg, color_text):
         font = pygame.font.Font(None, 35)
-        text2 = font.render(msg, True, color_text, (0, 0, 0))
+        text2 = font.render(msg, True, color_text, (36, 9, 239))
         window.blit(text2, (0, SPRITE_SIZE * (SPRITES_NUMBER + 1)))
 
 
