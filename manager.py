@@ -143,11 +143,9 @@ class Menu(States):
             if event.key == K_F1:
                 self.map = True
                 control.maze_choice = MAP1
-                self.maze.__init__(pygame, MAP1)
             elif event.key == K_F2:
                 self.map = True
                 control.maze_choice = MAP2
-                self.maze.__init__(pygame, MAP2)
 
     def update(self, HOMEPAGE_IMAGE):
         self.home.display(HOMEPAGE_IMAGE, self.wind)
