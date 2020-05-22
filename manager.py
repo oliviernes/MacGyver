@@ -120,7 +120,6 @@ class States(object):
         self.next = None
         self.quit = False
         self.previous = None
-        self.map = None
         self.maze = MapManager(pygame, MAP1)
 
 class Menu(States):
@@ -138,13 +137,11 @@ class Menu(States):
 
         if event.type == KEYDOWN:
             if event.key == K_RETURN or event.key == K_KP_ENTER:
-                if self.map is True:
+                if control.maze_choice is not None:
                     self.done = True
             if event.key == K_F1:
-                self.map = True
                 control.maze_choice = MAP1
             elif event.key == K_F2:
-                self.map = True
                 control.maze_choice = MAP2
 
     def update(self, HOMEPAGE_IMAGE):
@@ -161,8 +158,10 @@ class Game(States):
 
         if control.maze_choice == MAP1 or control.maze_choice == None:
             self.maze.__init__(pygame, MAP1)
+            control.maze_choice = None
         elif control.maze_choice == MAP2:
             self.maze.__init__(pygame, MAP2)
+            control.maze_choice = None
 
         self.window = self.maze.window()
         self.maze.game_info(self.window, "Picked up tools:")
@@ -172,7 +171,6 @@ class Game(States):
         self.guard.position(14, 14)
         self.macgyver = MacGyver(self.maze, MACGYVER_IMAGE)
         self.macgyver.position()
-
 
         self.list_tool = []
         for tool_name, tool_image in TOOL_LIST.items():
