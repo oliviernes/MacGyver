@@ -91,11 +91,6 @@ class MapManager(Map):
         return pygame.mixer.Sound(GAME_OVER_SOUND)
 
 control=Control()
-control.over = True
-control.win = True
-control.lose = False
-control.maze_choice = None
-
 
 class States(object):
     def __init__(self):
