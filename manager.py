@@ -98,7 +98,7 @@ class States(object):
         self.next = None
         self.quit = False
         self.previous = None
-        self.maze = MapManager(pygame, MAP1)
+        self.maze = Map(pygame, MAP1)
 
 class Menu(States):
     def __init__(self):

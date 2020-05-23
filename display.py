@@ -1,6 +1,10 @@
 import pygame
 from random import randint
 from constants import (
+    WINDOW_WIDE,
+    WINDOW_LENGTH,
+    WIN_SOUND,
+    GAME_OVER_SOUND,
     WALL_IMAGE,
     FLOOR_IMAGE,
     SPRITES_NUMBER,
@@ -13,7 +17,8 @@ from constants import (
 class Map:
     """build the map from map*.txt files"""
 
-    def __init__(self, map_file):
+    def __init__(self, pygame, map_file):
+        self.pygame = pygame.init()
         """Generates an array in order to display the maze"""
         self.maze_array = self.parse_array(map_file)
 
@@ -51,6 +56,18 @@ class Map:
         font = pygame.font.Font(None, 35)
         text2 = font.render(msg, True, color_text, (36, 9, 239))
         window.blit(text2, (0, SPRITE_SIZE * (SPRITES_NUMBER + 1)))
+    
+    def window(self):
+        screen = pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
+        color = [36, 9, 239]
+        screen.fill(color)
+        return screen
+
+    def win_sound(self):
+        return pygame.mixer.Sound(WIN_SOUND)
+
+    def game_over_sound(self):
+        return pygame.mixer.Sound(GAME_OVER_SOUND)
 
 
 class BaseSprite:
