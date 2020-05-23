@@ -13,6 +13,21 @@ from constants import (
     TOOLS_SOUND,
 )
 
+class Home():
+    def __init__(self, pygame):
+        self.pygame = pygame.init()
+
+    def window(self):
+        return pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
+
+    def home_page(self, homepage, window):
+        self.homepage = homepage
+        page = pygame.image.load(self.homepage).convert()
+        window.blit(page, (0, 0))
+
+    def display(self, HOMEPAGE_IMAGE, window):
+        self.home_page(HOMEPAGE_IMAGE, window)
+        pygame.display.flip()
 
 class Map:
     """build the map from map*.txt files"""
@@ -56,7 +71,7 @@ class Map:
         font = pygame.font.Font(None, 35)
         text2 = font.render(msg, True, color_text, (36, 9, 239))
         window.blit(text2, (0, SPRITE_SIZE * (SPRITES_NUMBER + 1)))
-    
+
     def window(self):
         screen = pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
         color = [36, 9, 239]

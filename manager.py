@@ -38,7 +38,7 @@ from constants import (
     SPRITES_NUMBER,
 )
 
-from display import Map, MacGyver, Warden, Tools
+from display import Map, MacGyver, Warden, Tools, Home
 
 
 class Control:
@@ -56,40 +56,6 @@ class Control:
         self.lose = lose
         self.maze_choice = maze_choice
 
-class HomeManager():
-    def __init__(self, pygame):
-        self.pygame = pygame.init()
-
-    def window(self):
-        return pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
-
-    def home_page(self, homepage, window):
-        self.homepage = homepage
-        page = pygame.image.load(self.homepage).convert()
-        window.blit(page, (0, 0))
-
-    def display(self, HOMEPAGE_IMAGE, window):
-        self.home_page(HOMEPAGE_IMAGE, window)
-        pygame.display.flip()
-
-
-class MapManager(Map):
-    def __init__(self, pygame, MAP):
-        self.pygame = pygame.init()
-        super().__init__(MAP)
-
-    def window(self):
-        screen = pygame.display.set_mode((WINDOW_WIDE, WINDOW_LENGTH))
-        color = [36, 9, 239]
-        screen.fill(color)
-        return screen
-
-    def win_sound(self):
-        return pygame.mixer.Sound(WIN_SOUND)
-
-    def game_over_sound(self):
-        return pygame.mixer.Sound(GAME_OVER_SOUND)
-
 control=Control()
 
 class States(object):
@@ -104,7 +70,7 @@ class Menu(States):
     def __init__(self):
         States.__init__(self)
         self.next = 'game'
-        self.home = HomeManager(pygame)
+        self.home = Home(pygame)
         self.wind=self.home.window()
 
     def get_event(self, event):
