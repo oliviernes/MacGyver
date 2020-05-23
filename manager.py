@@ -3,7 +3,7 @@
 import pygame
 import time
 
-#~ from transitions import Machine
+# ~ from transitions import Machine
 
 from pygame.locals import (
     K_F2,
@@ -48,17 +48,18 @@ class States(object):
         self.quit = False
         self.previous = None
         self.maze = Map(pygame, MAP1)
-        self.maze_choice = None 
+        self.maze_choice = None
         self.over = True
         self.win = True
         self.lose = False
-        
+
+
 class Menu(States):
     def __init__(self):
         States.__init__(self)
-        self.next = 'game'
+        self.next = "game"
         self.home = Home(pygame)
-        self.wind=self.home.window()
+        self.wind = self.home.window()
 
     def get_event(self, event):
 
@@ -78,10 +79,11 @@ class Menu(States):
     def update(self, HOMEPAGE_IMAGE):
         self.home.display(HOMEPAGE_IMAGE, self.wind)
 
+
 class Game(States):
     def __init__(self):
         States.__init__(self)
-        self.next = 'menu'
+        self.next = "menu"
 
         if self.maze_choice == MAP1 or self.maze_choice == None:
             self.maze.__init__(pygame, MAP1)
@@ -109,7 +111,7 @@ class Game(States):
         self.grabbed_tools = []
 
     def get_event(self, event):
-         # To accelerate repeating key strokes:
+        # To accelerate repeating key strokes:
         if event.type == KEYDOWN:
             if event.key == K_a:
                 pygame.key.set_repeat(10, 100)
@@ -174,9 +176,9 @@ class Game(States):
                     self.window, "You win! You put to sleep the guard!", COLOR_WIN
                 )
         elif (
-                self.macgyver.case_num_x == 14
-                and self.macgyver.case_num_y == 14
-                and len(self.grabbed_tools) != 3
+            self.macgyver.case_num_x == 14
+            and self.macgyver.case_num_y == 14
+            and len(self.grabbed_tools) != 3
         ):
             self.maze.warden_asleep_info(self.window, "You lose! GAME OVER", COLOR_LOSE)
             if self.over is True:
@@ -187,35 +189,41 @@ class Game(States):
             self.over = False
 
         pygame.display.flip()
- 
+
+
 class Manage:
     def __init__(self):
         self.done = False
+
     def setup_states(self, state_dict, start_state):
         self.state_dict = state_dict
         self.state_name = start_state
         self.state = self.state_dict[self.state_name]
+
     def flip_state(self):
         self.state.done = False
-        previous,self.state_name = self.state_name, self.state.next
+        previous, self.state_name = self.state_name, self.state.next
         self.state = self.state_dict[self.state_name]
         self.state.previous = previous
         if self.state_name == "game":
             self.state.__init__()
+
     def update(self):
         if self.state.quit:
             self.done = True
         elif self.state.done:
             self.flip_state()
-        if self.state_name=="menu":
+        if self.state_name == "menu":
             self.state.update(HOMEPAGE_IMAGE)
-        elif self.state_name=="game":
+        elif self.state_name == "game":
             self.state.update()
+
     def event_loop(self):
         for event in pygame.event.get():
             if event.type == QUIT:
                 self.done = True
             self.state.get_event(event)
+
     def main_game_loop(self):
         while not self.done:
             self.event_loop()

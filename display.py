@@ -13,7 +13,8 @@ from constants import (
     TOOLS_SOUND,
 )
 
-class Home():
+
+class Home:
     def __init__(self, pygame):
         self.pygame = pygame.init()
 
@@ -28,6 +29,7 @@ class Home():
     def display(self, HOMEPAGE_IMAGE, window):
         self.home_page(HOMEPAGE_IMAGE, window)
         pygame.display.flip()
+
 
 class Map:
     """build the map from map*.txt files"""
@@ -173,4 +175,3 @@ class Tools(BaseSprite):
 
         """To avoid tools'superposition"""
         self.maze.maze_array[self.case_num_y][self.case_num_x] = "T"
-
