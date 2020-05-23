@@ -41,23 +41,6 @@ from constants import (
 from display import Map, MacGyver, Warden, Tools, Home
 
 
-class Control:
-    """Class to control the value of boolans needed for several methods"""
-
-    def __init__(
-            self,
-            over=True,
-            win=True,
-            lose=False,
-            maze_choice=None,
-    ):
-        self.over = over
-        self.win = win
-        self.lose = lose
-        self.maze_choice = maze_choice
-
-control=Control()
-
 class States(object):
     def __init__(self):
         self.done = False
@@ -65,7 +48,11 @@ class States(object):
         self.quit = False
         self.previous = None
         self.maze = Map(pygame, MAP1)
-
+        self.maze_choice = None 
+        self.over = True
+        self.win = True
+        self.lose = False
+        
 class Menu(States):
     def __init__(self):
         States.__init__(self)
@@ -81,12 +68,12 @@ class Menu(States):
 
         if event.type == KEYDOWN:
             if event.key == K_RETURN or event.key == K_KP_ENTER:
-                if control.maze_choice is not None:
+                if self.maze_choice is not None:
                     self.done = True
             if event.key == K_F1:
-                control.maze_choice = MAP1
+                self.maze_choice = MAP1
             elif event.key == K_F2:
-                control.maze_choice = MAP2
+                self.maze_choice = MAP2
 
     def update(self, HOMEPAGE_IMAGE):
         self.home.display(HOMEPAGE_IMAGE, self.wind)
@@ -96,16 +83,12 @@ class Game(States):
         States.__init__(self)
         self.next = 'menu'
 
-        control.over = True
-        control.win = True
-        control.lose = False
-
-        if control.maze_choice == MAP1 or control.maze_choice == None:
+        if self.maze_choice == MAP1 or self.maze_choice == None:
             self.maze.__init__(pygame, MAP1)
-            control.maze_choice = None
-        elif control.maze_choice == MAP2:
+            self.maze_choice = None
+        elif self.maze_choice == MAP2:
             self.maze.__init__(pygame, MAP2)
-            control.maze_choice = None
+            self.maze_choice = None
 
         self.window = self.maze.window()
         self.maze.game_info(self.window, "Picked up tools:")
@@ -155,9 +138,9 @@ class Game(States):
         self.maze.display_map(self.window)
         self.macgyver.check_tools(self.list_tool, self.grabbed_tools)
 
-        if control.win is True:
+        if self.win is True:
             self.macgyver.display(self.window)
-        if control.lose is False:
+        if self.lose is False:
             self.guard.display(self.window)
 
         """Display tools if they haven't been taken"""
@@ -181,12 +164,12 @@ class Game(States):
             and self.macgyver.case_num_y == 14
             and len(self.grabbed_tools) == 3
         ):
-            if control.over is True:
+            if self.over is True:
                 print("You win!")
                 """SOUND settings"""
                 self.win_sound.play()
-                control.over = False
-                control.lose = True
+                self.over = False
+                self.lose = True
                 self.maze.warden_asleep_info(
                     self.window, "You win! You put to sleep the guard!", COLOR_WIN
                 )
@@ -196,12 +179,12 @@ class Game(States):
                 and len(self.grabbed_tools) != 3
         ):
             self.maze.warden_asleep_info(self.window, "You lose! GAME OVER", COLOR_LOSE)
-            if control.over is True:
+            if self.over is True:
                 print("You lose!")
                 """SOUND settings"""
                 self.game_over_sound.play()
-            control.win = False
-            control.over = False
+            self.win = False
+            self.over = False
 
         pygame.display.flip()
  
