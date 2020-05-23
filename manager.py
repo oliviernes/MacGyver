@@ -98,14 +98,6 @@ class MapManager(Map):
     def game_over_sound(self):
         return pygame.mixer.Sound(GAME_OVER_SOUND)
 
-class GameManager():
-    def __init__(self, pygame):
-        self.pygame = pygame.init()
-
-    def get_input(self):
-        return pygame.event.get()
-
-
 control=Control()
 control.over = True
 control.win = True
