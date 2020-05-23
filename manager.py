@@ -46,19 +46,11 @@ class Control:
 
     def __init__(
             self,
-            game=True,
-            home_page=True,
-            selected=False,
-            playing=False,
             over=True,
             win=True,
             lose=False,
             maze_choice=None,
     ):
-        self.game = game
-        self.home_page = home_page
-        self.selected = selected
-        self.playing = playing
         self.over = over
         self.win = win
         self.lose = lose
@@ -102,7 +94,6 @@ control=Control()
 control.over = True
 control.win = True
 control.lose = False
-control.selected = False
 control.maze_choice = None
 
 
