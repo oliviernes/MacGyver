@@ -38,6 +38,7 @@ from display import Map, MacGyver, Warden, Tools, Home
 class Control:
     """Help to control the maze_choice attribute between Menu and
     Game object"""
+
     def __init__(
         self, maze_choice=None,
     ):
@@ -47,14 +48,14 @@ class Control:
 control = Control()
 
 
-class States():
+class States:
     """Class statings different variables to control the game"""
+
     def __init__(self):
         self.done = False
         self.next = None
         self.quit = False
         self.previous = None
-        #~ self.maze = Map(pygame, MAP1)
         self.over = True
         self.win = True
         self.lose = False
@@ -62,6 +63,7 @@ class States():
 
 class Menu(States):
     """Manage the home page"""
+
     def __init__(self):
         super().__init__()
         self.next = "game"
@@ -89,6 +91,7 @@ class Menu(States):
 
 class Game(States):
     """Manage the game"""
+
     def __init__(self):
         super().__init__()
         self.next = "menu"
@@ -120,7 +123,7 @@ class Game(States):
 
     def get_event(self, event):
         """To get the event in during the game"""
-        
+
         # To accelerate repeating key strokes:
         if event.type == KEYDOWN:
             if event.key == K_a:
@@ -183,20 +186,14 @@ class Game(States):
                 self.over = False
                 self.lose = True
                 self.maze.warden_asleep_info(
-                    self.window,
-                    "You win! You put to sleep the guard!",
-                    COLOR_WIN
+                    self.window, "You win! You put to sleep the guard!", COLOR_WIN
                 )
         elif (
             self.macgyver.case_num_x == 14
             and self.macgyver.case_num_y == 14
             and len(self.grabbed_tools) != 3
         ):
-            self.maze.warden_asleep_info(
-                self.window,
-                "You lose! GAME OVER",
-                COLOR_LOSE
-                )
+            self.maze.warden_asleep_info(self.window, "You lose! GAME OVER", COLOR_LOSE)
             if self.over is True:
                 print("You lose!")
                 """SOUND settings"""
@@ -209,6 +206,7 @@ class Game(States):
 
 class Manage:
     """Manage the states machine"""
+
     def __init__(self):
         self.done = False
 
