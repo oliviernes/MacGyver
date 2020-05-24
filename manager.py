@@ -63,7 +63,7 @@ class States():
 class Menu(States):
     """Manage the home page"""
     def __init__(self):
-        States.__init__(self)
+        super().__init__()
         self.next = "game"
         self.home = Home(pygame)
         self.wind = self.home.window()
@@ -90,7 +90,7 @@ class Menu(States):
 class Game(States):
     """Manage the game"""
     def __init__(self):
-        States.__init__(self)
+        super().__init__()
         self.next = "menu"
 
         # pylint: disable=too-many-instance-attributes
