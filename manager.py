@@ -54,7 +54,7 @@ class States():
         self.next = None
         self.quit = False
         self.previous = None
-        self.maze = Map(pygame, MAP1)
+        #~ self.maze = Map(pygame, MAP1)
         self.over = True
         self.win = True
         self.lose = False
@@ -93,14 +93,11 @@ class Game(States):
         super().__init__()
         self.next = "menu"
 
-        # pylint: disable=too-many-instance-attributes
-        # 12 is reasonable in this case.
-
         if control.maze_choice == MAP1 or control.maze_choice is None:
-            self.maze.__init__(pygame, MAP1)
+            self.maze = Map(pygame, MAP1)
             control.maze_choice = None
         elif control.maze_choice == MAP2:
-            self.maze.__init__(pygame, MAP2)
+            self.maze = Map(pygame, MAP2)
             control.maze_choice = None
 
         self.window = self.maze.window()
