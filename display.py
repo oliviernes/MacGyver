@@ -9,7 +9,6 @@ from constants import (
     FLOOR_IMAGE,
     SPRITES_NUMBER,
     SPRITE_SIZE,
-    MAP1,
     TOOLS_SOUND,
 )
 

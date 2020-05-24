@@ -22,10 +22,6 @@ from pygame.locals import (
 )
 
 from constants import (
-    WINDOW_WIDE,
-    WINDOW_LENGTH,
-    WIN_SOUND,
-    GAME_OVER_SOUND,
     HOMEPAGE_IMAGE,
     MACGYVER_IMAGE,
     WARDEN_IMAGE,
@@ -40,14 +36,16 @@ from constants import (
 
 from display import Map, MacGyver, Warden, Tools, Home
 
-class Control():
+
+class Control:
     def __init__(
-        self,
-        maze_choice = None,
+        self, maze_choice=None,
     ):
         self.maze_choice = maze_choice
 
-control=Control()
+
+control = Control()
+
 
 class States(object):
     def __init__(self):
@@ -59,6 +57,7 @@ class States(object):
         self.over = True
         self.win = True
         self.lose = False
+
 
 class Menu(States):
     def __init__(self):
@@ -91,7 +90,7 @@ class Game(States):
         States.__init__(self)
         self.next = "menu"
 
-        if control.maze_choice == MAP1 or control.maze_choice == None:
+        if control.maze_choice == MAP1 or control.maze_choice is None:
             self.maze.__init__(pygame, MAP1)
             control.maze_choice = None
         elif control.maze_choice == MAP2:
@@ -179,14 +178,20 @@ class Game(States):
                 self.over = False
                 self.lose = True
                 self.maze.warden_asleep_info(
-                    self.window, "You win! You put to sleep the guard!", COLOR_WIN
+                    self.window,
+                    "You win! You put to sleep the guard!",
+                    COLOR_WIN
                 )
         elif (
             self.macgyver.case_num_x == 14
             and self.macgyver.case_num_y == 14
             and len(self.grabbed_tools) != 3
         ):
-            self.maze.warden_asleep_info(self.window, "You lose! GAME OVER", COLOR_LOSE)
+            self.maze.warden_asleep_info(
+                self.window,
+                "You lose! GAME OVER",
+                COLOR_LOSE
+                )
             if self.over is True:
                 print("You lose!")
                 """SOUND settings"""
