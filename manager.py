@@ -40,6 +40,14 @@ from constants import (
 
 from display import Map, MacGyver, Warden, Tools, Home
 
+class Control():
+    def __init__(
+        self,
+        maze_choice = None,
+    ):
+        self.maze_choice = maze_choice
+
+control=Control()
 
 class States(object):
     def __init__(self):
@@ -48,11 +56,9 @@ class States(object):
         self.quit = False
         self.previous = None
         self.maze = Map(pygame, MAP1)
-        self.maze_choice = None
         self.over = True
         self.win = True
         self.lose = False
-
 
 class Menu(States):
     def __init__(self):
@@ -69,12 +75,12 @@ class Menu(States):
 
         if event.type == KEYDOWN:
             if event.key == K_RETURN or event.key == K_KP_ENTER:
-                if self.maze_choice is not None:
+                if control.maze_choice is not None:
                     self.done = True
             if event.key == K_F1:
-                self.maze_choice = MAP1
+                control.maze_choice = MAP1
             elif event.key == K_F2:
-                self.maze_choice = MAP2
+                control.maze_choice = MAP2
 
     def update(self, HOMEPAGE_IMAGE):
         self.home.display(HOMEPAGE_IMAGE, self.wind)
@@ -85,12 +91,12 @@ class Game(States):
         States.__init__(self)
         self.next = "menu"
 
-        if self.maze_choice == MAP1 or self.maze_choice == None:
+        if control.maze_choice == MAP1 or control.maze_choice == None:
             self.maze.__init__(pygame, MAP1)
-            self.maze_choice = None
-        elif self.maze_choice == MAP2:
+            control.maze_choice = None
+        elif control.maze_choice == MAP2:
             self.maze.__init__(pygame, MAP2)
-            self.maze_choice = None
+            control.maze_choice = None
 
         self.window = self.maze.window()
         self.maze.game_info(self.window, "Picked up tools:")
