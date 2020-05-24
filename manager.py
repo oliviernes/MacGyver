@@ -205,7 +205,7 @@ class Game(States):
 
 
 class Manage:
-    """Manage the states machine"""
+    """Manage the state machine"""
 
     def __init__(self):
         self.done = False

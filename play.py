@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-"""start the states machine"""
+"""start the state machine"""
 
 from manager import Manage, Menu, Game
 
