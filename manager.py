@@ -1,7 +1,7 @@
 """Manage the control of the game"""
 
-import pygame
 import time
+import pygame
 
 # ~ from transitions import Machine
 
@@ -38,6 +38,8 @@ from display import Map, MacGyver, Warden, Tools, Home
 
 
 class Control:
+    """Help to control the maze_choice attribute between Menu and
+    Game object"""
     def __init__(
         self, maze_choice=None,
     ):
@@ -47,7 +49,8 @@ class Control:
 control = Control()
 
 
-class States(object):
+class States():
+    """Class statings different variables to control the game"""
     def __init__(self):
         self.done = False
         self.next = None
@@ -60,6 +63,7 @@ class States(object):
 
 
 class Menu(States):
+    """Manage the home page"""
     def __init__(self):
         States.__init__(self)
         self.next = "game"
@@ -86,9 +90,13 @@ class Menu(States):
 
 
 class Game(States):
+    """Manage the game"""
     def __init__(self):
         States.__init__(self)
         self.next = "menu"
+
+        # pylint: disable=too-many-instance-attributes
+        # 12 is reasonable in this case.
 
         if control.maze_choice == MAP1 or control.maze_choice is None:
             self.maze.__init__(pygame, MAP1)
@@ -110,12 +118,14 @@ class Game(States):
         for tool_name, tool_image in TOOL_LIST.items():
             tool = Tools(self.maze, tool_image, tool_name)
             tool.position()
-            tool.place_item(self.maze)
+            tool.place_item()
             self.list_tool.append(tool)
 
         self.grabbed_tools = []
 
     def get_event(self, event):
+        """To get the event in during the game"""
+        
         # To accelerate repeating key strokes:
         if event.type == KEYDOWN:
             if event.key == K_a:
@@ -203,6 +213,7 @@ class Game(States):
 
 
 class Manage:
+    """Manage the states machine"""
     def __init__(self):
         self.done = False
 

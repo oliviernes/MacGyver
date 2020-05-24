@@ -1,5 +1,8 @@
-import pygame
+"""Define class displaying the homepage and the game"""
+
 from random import randint
+import pygame
+
 from constants import (
     WINDOW_WIDE,
     WINDOW_LENGTH,
@@ -165,7 +168,7 @@ class Tools(BaseSprite):
         self.maze = maze
         self.name = name
 
-    def place_item(self, maze):
+    def place_item(self):
         while self.maze.maze_array[self.case_num_y][self.case_num_x] != "0":
             self.case_num_x = randint(1, 14)
             self.case_num_y = randint(1, 14)
