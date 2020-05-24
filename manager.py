@@ -3,8 +3,6 @@
 import time
 import pygame
 
-# ~ from transitions import Machine
-
 from pygame.locals import (
     K_F2,
     K_F1,
@@ -250,4 +248,3 @@ class Manage:
         while not self.done:
             self.event_loop()
             self.update()
-            pygame.display.update()
