@@ -186,7 +186,7 @@ class Game(States):
                 self.over = False
                 self.lose = True
                 self.maze.warden_asleep_info(
-                    self.window, "You win! You put to sleep the guard!", COLOR_WIN
+                    self.window, "You win! The guard fell asleep!", COLOR_WIN
                 )
         elif (
             self.macgyver.case_num_x == 14
